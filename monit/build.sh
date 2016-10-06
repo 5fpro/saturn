@@ -2,11 +2,11 @@ echo "Your app name? (lowcase)"
 read APP_NAME
 
 unicorn_file="/etc/init.d/unicorn-${APP_NAME}"
-curl -o $unicorn_file -sSL https://saturn.5fpro.com/monit/unicorn_bin.sh
+curl -o $unicorn_file -sSL http://saturn.5fpro.com/monit/unicorn_bin.sh
 chmod +x $unicorn_file
 
 unicorn_conf="/etc/monit/conf.d/unicorn-${APP_NAME}"
-curl -o $unicorn_conf -sSL https://saturn.5fpro.com/monit/unicorn_monitrc.conf
+curl -o $unicorn_conf -sSL http://saturn.5fpro.com/monit/unicorn_monitrc.conf
 sed -i "s@{{UNICRON_BIN_FILE}}@${unicorn_file}@" $unicorn_conf
 
 echo "Your app path?"
