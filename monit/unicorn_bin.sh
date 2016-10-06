@@ -33,7 +33,7 @@ UNICORN_PID={{UNICORN_PID}}
 UNICORN_CONFIG_FILE={{UNICORN_CONFIG_FILE}}
 
 # full command
-CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; /usr/local/rvm/bin/rvm default do bundle exec unicorn -c ${CONFIG_FILE} -E deployment -D )"
+CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; /usr/local/rvm/bin/rvm default do bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
 # echo "DEBUG:"
 # echo $CMD
 
