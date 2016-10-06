@@ -28,8 +28,8 @@ read -p "unicorn pid dir path? (${APP_ROOT}/tmp/pids)" UNICORN_PID_PATH
 if [ "$UNICORN_PID_PATH" == "" ]; then UNICORN_PID_PATH="${APP_ROOT}/tmp/pids"; fi;
 sed -i "s@{{UNICORN_PID_PATH}}@${UNICORN_PID_PATH}@" $unicorn_file
 
-read -p "unicorn pid file path? (${PID_PATH}/unicorn.pid)" UNICORN_PID
-if [ "$UNICORN_PID" == "" ]; then UNICORN_PID="${PID_PATH}/unicorn.pid"; fi;
+read -p "unicorn pid file path? (${UNICORN_PID_PATH}/unicorn.pid)" UNICORN_PID
+if [ "$UNICORN_PID" == "" ]; then UNICORN_PID="${UNICORN_PID_PATH}/unicorn.pid"; fi;
 sed -i "s@{{UNICORN_PID}}@${UNICORN_PID}@" $unicorn_file
 sed -i "s@{{UNICORN_PID}}@${UNICORN_PID}@" $unicorn_conf
 
