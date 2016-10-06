@@ -9,6 +9,8 @@ unicorn_conf="/etc/monit/conf.d/unicorn-${APP_NAME}"
 curl -o $unicorn_conf -sSL http://saturn.5fpro.com/monit/unicorn.conf
 sed -i "s@{{UNICRON_BIN_FILE}}@${unicorn_file}@" $unicorn_conf
 
+sed -i "s@{{APP_NAME}}@${APP_NAME}-unicorn@" $unicorn_conf
+
 echo "Your app path?"
 read APP_ROOT
 sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $unicorn_file
