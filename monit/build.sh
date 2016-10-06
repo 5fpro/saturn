@@ -1,5 +1,5 @@
 read -p "setup nginx? (y/N)" ans
-if [[ (ans == "y") || (ans == "Y") ]]; then
+if [[ (ans == "y\n") || (ans == "Y\n") ]]; then
   curl -o /tmp/nginx.sh http://saturn.5fpro.com/monit/build_nginx.sh
   chmod +x /tmp/nginx.sh
   /tmp/nginx.sh
@@ -7,7 +7,7 @@ if [[ (ans == "y") || (ans == "Y") ]]; then
 fi;
 
 read -p "setup unicorn? (y/N)" ans
-if [[ (ans == "y") || (ans == "Y") ]]; then
+if [[ (ans == "y\n") || (ans == "Y\n") ]]; then
   curl -o /tmp/unicorn.sh http://saturn.5fpro.com/monit/build_unicorn.sh
   chmod +x /tmp/unicorn.sh
   /tmp/unicorn.sh
