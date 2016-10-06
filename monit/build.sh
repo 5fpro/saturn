@@ -7,7 +7,7 @@ if [[ ($ans == "y") || ($ans == "Y") ]]; then
 fi;
 
 read -p "setup unicorn? (y/N)" ans
-if [[ ($ans == "y\n") || ($ans == "Y\n") ]]; then
+if [[ ($ans == "y") || ($ans == "Y") ]]; then
   curl -o /tmp/unicorn.sh http://saturn.5fpro.com/monit/build_unicorn.sh
   chmod +x /tmp/unicorn.sh
   /tmp/unicorn.sh
