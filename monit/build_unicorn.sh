@@ -1,4 +1,4 @@
-echo "Your app name? (lowcase)"
+echo "rails dir name?"
 read APP_NAME
 
 unicorn_file="/etc/init.d/unicorn-${APP_NAME}"
