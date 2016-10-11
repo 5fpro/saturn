@@ -49,6 +49,6 @@ sed -i "s@{{UNICORN_CONFIG_FILE}}@${UNICORN_CONFIG_FILE}@" $unicorn_file
 echo "generating bin file in ${unicorn_file}"
 echo "generating conf file to ${unicorn_conf}"
 echo "append '${unicorn_file} start' to /etc/rc.local"
-echo "${unicorn_file} start" >> /etc/rc.local
+if grep -q "${unicorn_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$unicorn_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
 /etc/init.d/monit reload

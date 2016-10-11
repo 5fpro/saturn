@@ -53,6 +53,6 @@ sed -i "s@{{SIDEKIQ_LOG_FILE}}@${SIDEKIQ_LOG_FILE}@" $sidekiq_file
 echo "generating bin file in ${sidekiq_file}"
 echo "generating conf file to ${sidekiq_conf}"
 echo "append '${sidekiq_file} start' to /etc/rc.local"
-echo "${sidekiq_file} start" >> /etc/rc.local
+if grep -q "${sidekiq_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$sidekiq_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
 /etc/init.d/monit reload
