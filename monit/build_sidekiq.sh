@@ -46,9 +46,9 @@ if [ "$SIDEKIQ_CONFIG_FILE" == "" ]; then SIDEKIQ_CONFIG_FILE="${APP_ROOT}/confi
 sed -i "s@{{SIDEKIQ_CONFIG_FILE}}@${SIDEKIQ_CONFIG_FILE}@" $sidekiq_file
 
 echo "sidekiq log file path? (${APP_ROOT}/log/sidekiq.log)"
-read SIDEKIQ_CONFIG_FILE
-if [ "$SIDEKIQ_CONFIG_FILE" == "" ]; then SIDEKIQ_CONFIG_FILE="${APP_ROOT}/log/sidekiq.log"; fi;
-sed -i "s@{{SIDEKIQ_CONFIG_FILE}}@${SIDEKIQ_CONFIG_FILE}@" $sidekiq_file
+read SIDEKIQ_LOG_FILE
+if [ "$SIDEKIQ_LOG_FILE" == "" ]; then SIDEKIQ_LOG_FILE="${APP_ROOT}/log/sidekiq.log"; fi;
+sed -i "s@{{SIDEKIQ_LOG_FILE}}@${SIDEKIQ_LOG_FILE}@" $sidekiq_file
 
 echo "generating bin file in ${sidekiq_file}"
 echo "generating conf file to ${sidekiq_conf}"
