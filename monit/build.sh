@@ -14,3 +14,10 @@ if [[ ($ans == "y") || ($ans == "Y") ]]; then
   rm /tmp/unicorn.sh
 fi;
 
+read -p "setup sidekiq? (y/N)" ans
+if [[ ($ans == "y") || ($ans == "Y") ]]; then
+  curl -o /tmp/sidekiq.sh http://saturn.5fpro.com/monit/build_sidekiq.sh
+  chmod +x /tmp/sidekiq.sh
+  /tmp/sidekiq.sh
+  rm /tmp/sidekiq.sh
+fi;
