@@ -1,4 +1,4 @@
-echo "rails dir name?"
+echo "rails dir or app name?"
 read APP_NAME
 
 unicorn_file="/etc/init.d/unicorn-${APP_NAME}"
@@ -11,7 +11,7 @@ sed -i "s@{{UNICORN_BIN_FILE}}@${unicorn_file}@" $unicorn_conf
 
 sed -i "s@{{APP_NAME}}@${APP_NAME}-unicorn@" $unicorn_conf
 
-echo "Your app path?"
+echo "Your app full path with current dir?"
 read APP_ROOT
 sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $unicorn_file
 

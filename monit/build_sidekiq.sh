@@ -1,4 +1,4 @@
-echo "rails dir name?"
+echo "rails app name?"
 read APP_NAME
 
 sidekiq_file="/etc/init.d/sidekiq-${APP_NAME}"
@@ -10,7 +10,7 @@ curl -o $sidekiq_conf -sSL http://saturn.5fpro.com/monit/sidekiq.conf
 sed -i "s@{{SIDEKIQ_BIN_FILE}}@${sidekiq_file}@" $sidekiq_conf
 sed -i "s@{{APP_NAME}}@${APP_NAME}-sidekiq@" $sidekiq_conf
 
-echo "Your app path?"
+echo "Your app full path with current dir?"
 read APP_ROOT
 sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $sidekiq_file
 
