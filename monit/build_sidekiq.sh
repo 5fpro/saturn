@@ -34,7 +34,7 @@ read SIDEKIQ_PID_PATH
 if [ "$SIDEKIQ_PID_PATH" == "" ]; then SIDEKIQ_PID_PATH="${APP_ROOT}/tmp/pids"; fi;
 sed -i "s@{{SIDEKIQ_PID_PATH}}@${SIDEKIQ_PID_PATH}@" $sidekiq_file
 
-echo "sidekiq pid file path? (${SIDEKIQ_PID_PATH}/sidekiq.pid)"
+echo "sidekiq pid file path? (${SIDEKIQ_PID_PATH}/sidekiq-0.pid)"
 read SIDEKIQ_PID
 if [ "$SIDEKIQ_PID" == "" ]; then SIDEKIQ_PID="${SIDEKIQ_PID_PATH}/sidekiq-0.pid"; fi;
 sed -i "s@{{SIDEKIQ_PID}}@${SIDEKIQ_PID}@" $sidekiq_file
