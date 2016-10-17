@@ -2,11 +2,11 @@ echo "rails dir or app name?"
 read APP_NAME
 
 unicorn_file="/etc/init.d/unicorn-${APP_NAME}"
-curl -o $unicorn_file -sSL http://saturn.5fpro.com/monit/unicorn_bin.sh
+curl -o $unicorn_file -sSL http://saturn.5fpro.com/monit/unicorn/bin.sh
 chmod +x $unicorn_file
 
 unicorn_conf="/etc/monit/conf.d/unicorn-${APP_NAME}"
-curl -o $unicorn_conf -sSL http://saturn.5fpro.com/monit/unicorn.conf
+curl -o $unicorn_conf -sSL http://saturn.5fpro.com/monit/unicorn/monit.conf
 sed -i "s@{{UNICORN_BIN_FILE}}@${unicorn_file}@" $unicorn_conf
 
 sed -i "s@{{APP_NAME}}@${APP_NAME}-unicorn@" $unicorn_conf

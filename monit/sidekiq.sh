@@ -2,11 +2,11 @@ echo "rails app name?"
 read APP_NAME
 
 sidekiq_file="/etc/init.d/sidekiq-${APP_NAME}"
-curl -o $sidekiq_file -sSL http://saturn.5fpro.com/monit/sidekiq_bin.sh
+curl -o $sidekiq_file -sSL http://saturn.5fpro.com/monit/sidekiq/bin.sh
 chmod +x $sidekiq_file
 
 sidekiq_conf="/etc/monit/conf.d/sidekiq-${APP_NAME}"
-curl -o $sidekiq_conf -sSL http://saturn.5fpro.com/monit/sidekiq.conf
+curl -o $sidekiq_conf -sSL http://saturn.5fpro.com/monit/sidekiq/monit.conf
 sed -i "s@{{SIDEKIQ_BIN_FILE}}@${sidekiq_file}@" $sidekiq_conf
 sed -i "s@{{APP_NAME}}@${APP_NAME}-sidekiq@" $sidekiq_conf
 

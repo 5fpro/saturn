@@ -1,5 +1,5 @@
 nginx_conf="/etc/monit/conf.d/nginx"
-curl -o $nginx_conf -sSL http://saturn.5fpro.com/monit/nginx.conf
+curl -o $nginx_conf -sSL http://saturn.5fpro.com/monit/nginx/monit.conf
 
 echo "nginx pid file? (/var/run/nginx.pid)"
 read NGINX_PID
