@@ -1,3 +1,15 @@
+file="/etc/monit/monitrc"
+if [ -f "$file" ]
+then
+  echo 'detected monit installed...'
+else
+  read -p "monit not install, press ENTER to install or ^C to cancel" ans
+  curl -o /tmp/install-monit.sh http://saturn.5fpro.com/monit/install.sh
+  chmod +x /tmp/install-monit.sh
+  /tmp/install-monit.sh
+  rm /tmp/install-monit.sh
+fi
+
 read -p "setup nginx? (y/N)" ans
 if [[ ($ans == "y") || ($ans == "Y") ]]; then
   curl -o /tmp/nginx.sh http://saturn.5fpro.com/monit/build_nginx.sh
