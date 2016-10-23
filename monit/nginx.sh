@@ -11,7 +11,7 @@ read NGINX_START
 if [ "$NGINX_START" == "" ]; then NGINX_START="/etc/init.d/nginx start"; fi;
 sed -i "s@{{NGINX_START}}@${NGINX_START}@" $nginx_conf
 
-echo "start nginx? (/etc/init.d/nginx stop)"
+echo "stop nginx? (/etc/init.d/nginx stop)"
 read NGINX_STOP
 if [ "$NGINX_STOP" == "" ]; then NGINX_STOP="/etc/init.d/nginx stop"; fi;
 sed -i "s@{{NGINX_STOP}}@${NGINX_STOP}@" $nginx_conf
