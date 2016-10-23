@@ -1,8 +1,8 @@
 apt-get update
 apt-get upgrade -y
 apt-get install software-properties-common python-software-properties -y
-add-apt-repository ppa:nginx/stable
-apt-get install nginx
+add-apt-repository ppa:nginx/stable -y
+apt-get install nginx -y
 echo "Changing config file..."
 sed -i "s@# gzip@gzip@" /etc/nginx/nginx.conf
 start_sh="/etc/init.d/nginx start"
