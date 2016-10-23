@@ -24,3 +24,6 @@ sudo -i -u $SU_USER bash -c "$CMD"
 echo "Linking node to /usr/bin/node ..."
 nodebin=`sudo -i -u $SU_USER bash -c "${nvmsh} && which node"`
 ln -s $nodebin /usr/bin/node
+
+CMD="echo \"EXECJS_RUNTIME=Node\" >> /home/${SU_USER}/.bashrc"
+sudo -i -u $SU_USER bash -c "$CMD"
