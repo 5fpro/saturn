@@ -14,9 +14,9 @@ CMD="cd /home/${SU_USER} && (curl -o- ${install_url} | bash)"
 sudo -i -u $SU_USER bash -c "$CMD"
 
 echo "To see current node.js version: https://nodejs.org/"
-echo "nodejs version? (v4.6.1)"
+echo "nodejs version? (v6.9.1)"
 read NODE_VER
-if [ "$NODE_VER" == "" ]; then NODE_VER="v4.6.1"; fi;
+if [ "$NODE_VER" == "" ]; then NODE_VER="v6.9.1"; fi;
 nvmsh=". \"/home/${SU_USER}/.nvm/nvm.sh\""
 CMD="${nvmsh} && nvm install ${NODE_VER}"
 sudo -i -u $SU_USER bash -c "$CMD"
