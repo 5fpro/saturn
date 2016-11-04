@@ -59,9 +59,9 @@ sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $conf_file
 
 echo "Force redirect domains with http(80), space for separate? (ENTER to skip)"
 read OTHER_DOMAINS
-if [ "$OTHER_DOMAINS" != "" ];
-  sed -i "s@{{FORCE_REDIRECT}}@@" $conf_file
-then
+if [ "$OTHER_DOMAINS" != "" ]; then
+  # sed -i "s@{{FORCE_REDIRECT}}@@" $conf_file
+else
   sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $force_redirect_conf
   sed -i "s@{{DOMAINS}}@${OTHER_DOMAINS}@" $force_redirect_conf
   sed -i "s@{{SERVER_NAME}}@${SERVER_NAME}@" $force_redirect_conf
