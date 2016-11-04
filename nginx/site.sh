@@ -79,4 +79,4 @@ else
   ln -s $conf_file $dist_file
 fi;
 service nginx reload
-# rm $force_redirect_conf
+rm $force_redirect_conf
