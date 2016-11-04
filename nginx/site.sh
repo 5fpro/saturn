@@ -22,6 +22,8 @@ read DEFAULT_SERVER
 if [[ ($DEFAULT_SERVER == "y") && ($DEFAULT_SERVER != "Y") ]]; then
   DEFAULT_SERVER=" default_server"
   sed -i "s@{{DEFAULT_SERVER}}@${DEFAULT_SERVER}@" $conf_file
+else
+  sed -i "s@{{DEFAULT_SERVER}}@@" $conf_file
 fi;
 
 
