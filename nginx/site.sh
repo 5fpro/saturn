@@ -4,6 +4,8 @@ read APP_NAME
 conf_file="/etc/nginx/sites-available/${APP_NAME}"
 dist_file="/etc/nginx/sites-enabled/${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/nginx/site.conf
+force_redirect_conf="/tmp/force_ssl_conf"
+curl -o $force_redirect_conf -sSL http://saturn.5fpro.com/nginx/force-redirect.conf
 
 sed -i "s@{{APP_NAME}}@${APP_NAME}@" $conf_file
 
@@ -13,7 +15,7 @@ read APP_ROOT
 if [ "$APP_ROOT" == "" ]; then APP_ROOT="${DEFAULT_APP_ROOT}"; fi;
 sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $conf_file
 
-echo "Server name?"
+echo "Main domain name?"
 read SERVER_NAME
 sed -i "s@{{SERVER_NAME}}@${SERVER_NAME}@" $conf_file
 
@@ -49,28 +51,23 @@ echo "Enable SSL?(y/N)"
 read SSL
 if [[ ("$SSL" == "y") || ("$SSL" == "Y") ]]; then
   PROTOCOL="https"
-  echo "SSL .crt file path?"
-  read SSL_CRT
-  echo "SSL .key file path?"
-  read SSL_KEY
   sed -i "s@# listen 443@listen 443@" $conf_file
   sed -i "s@# ssl@ssl@" $conf_file
 else
   PROTOCOL="http"
-  SSL_CRT="/path/to/file.crt"
-  SSL_KEY="/path/to/file.key"
 fi;
-sed -i "s@{{SSL_CRT}}@${SSL_CRT}@" $conf_file
-sed -i "s@{{SSL_KEY}}@${SSL_KEY}@" $conf_file
 sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $conf_file
 
-echo "Set main host for redirect? ENTER to skip"
-read MAIN_HOST
-if [ "$MAIN_HOST" != "" ];
-  sed -i "s@{{MAIN_HOST_REDIRECT}}@@" $conf_file
+echo "Force redirect domains with http(80), space for separate? (ENTER to skip)"
+read OTHER_DOMAINS
+if [ "$OTHER_DOMAINS" != "" ];
+  sed -i "s@{{FORCE_REDIRECT}}@@" $conf_file
 then
-  STR="if (\$host != '${MAIN_HOST}') { rewrite ^(.*)$ ${PROTOCOL}://${MAIN_HOST}$1 permanent; }"
-  sed -i "s@{{MAIN_HOST_REDIRECT}}@${STR}@" $conf_file
+  sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $force_redirect_conf
+  sed -i "s@{{DOMAINS}}@${OTHER_DOMAINS}@" $force_redirect_conf
+  sed -i "s@{{SERVER_NAME}}@${SERVER_NAME}@" $force_redirect_conf
+  STR=`cat ${force_redirect_conf}`
+  sed -i "s@{{FORCE_REDIRECT}}@${STR}@" $conf_file
 fi;
 
 if [ -f "$dist_file" ]; then
@@ -79,3 +76,4 @@ else
   ln -s $conf_file $dist_file
 fi;
 service nginx reload
+rm $force_redirect_conf
