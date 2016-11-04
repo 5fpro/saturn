@@ -4,7 +4,7 @@ read APP_NAME
 conf_file="/etc/nginx/sites-available/${APP_NAME}"
 dist_file="/etc/nginx/sites-enabled/${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/nginx/site.conf
-force_redirect_conf="/tmp/force_ssl_conf"
+force_redirect_conf="/tmp/force_redirect_conf"
 curl -o $force_redirect_conf -sSL http://saturn.5fpro.com/nginx/force-redirect.conf
 
 sed -i "s@{{APP_NAME}}@${APP_NAME}@" $conf_file
@@ -27,7 +27,6 @@ if [[ ($DEFAULT_SERVER == "y") && ($DEFAULT_SERVER != "Y") ]]; then
 else
   sed -i "s@{{DEFAULT_SERVER}}@@" $conf_file
 fi;
-
 
 DEFAULT_UNICORN_SOCK="/tmp/unicorn.${APP_NAME}.sock"
 echo "Unicorn sock file path? (${DEFAULT_UNICORN_SOCK})"
@@ -66,8 +65,11 @@ then
   sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $force_redirect_conf
   sed -i "s@{{DOMAINS}}@${OTHER_DOMAINS}@" $force_redirect_conf
   sed -i "s@{{SERVER_NAME}}@${SERVER_NAME}@" $force_redirect_conf
+  if [ $PROTOCOL == 'https']; then
+    sed -i "s@listen 80@# listen 80@" $conf_file
+  fi;
   STR=`cat ${force_redirect_conf}`
-  sed -i "s@{{FORCE_REDIRECT}}@${STR}@" $conf_file
+  sed -i "s@{{FORCE_REDIRECT}}@$STR@" $conf_file
 fi;
 
 if [ -f "$dist_file" ]; then
@@ -76,4 +78,4 @@ else
   ln -s $conf_file $dist_file
 fi;
 service nginx reload
-rm $force_redirect_conf
+# rm $force_redirect_conf
