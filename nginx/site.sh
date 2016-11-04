@@ -68,8 +68,8 @@ then
   if [ $PROTOCOL == 'https']; then
     sed -i "s@listen 80@# listen 80@" $conf_file
   fi;
-  STR=`cat ${force_redirect_conf}`
-  sed -i "s@{{FORCE_REDIRECT}}@$STR@" $conf_file
+
+  echo `cat ${force_redirect_conf}` >> $conf_file
 fi;
 
 if [ -f "$dist_file" ]; then
