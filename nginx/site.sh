@@ -67,6 +67,7 @@ sed -i "s@{{PROTOCOL}}@${PROTOCOL}@" $conf_file
 echo "Set main host for redirect? ENTER to skip"
 read MAIN_HOST
 if [ "$MAIN_HOST" != "" ];
+  sed -i "s@{{MAIN_HOST_REDIRECT}}@@" $conf_file
 then
   STR="if (\$host != '${MAIN_HOST}') { rewrite ^(.*)$ ${PROTOCOL}://${MAIN_HOST}$1 permanent; }"
   sed -i "s@{{MAIN_HOST_REDIRECT}}@${STR}@" $conf_file
