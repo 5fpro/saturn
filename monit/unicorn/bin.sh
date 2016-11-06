@@ -32,8 +32,12 @@ UNICORN_PID={{UNICORN_PID}}
 # unicorn config, 不同環境用不同檔名
 UNICORN_CONFIG_FILE={{UNICORN_CONFIG_FILE}}
 
+USER_HOME="/home/${DEPLOY_USER}"
+RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
+BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
+
 # full command
-CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; /usr/local/rvm/bin/rvm default do bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
+CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; ${BUNDLE_PREFIX} bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
 # echo "DEBUG:"
 # echo $CMD
 

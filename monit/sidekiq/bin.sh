@@ -28,9 +28,12 @@ SIDEKIQ_CONFIG_FILE={{SIDEKIQ_CONFIG_FILE}}
 # sidekiq log file path
 SIDEKIQ_LOG_FILE={{SIDEKIQ_LOG_FILE}}
 
+USER_HOME="/home/${DEPLOY_USER}"
+RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
+BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
 
 # full command
-CMD="cd ${APP_ROOT} && /usr/local/rvm/bin/rvm default do bundle exec sidekiq --index 0 --pidfile ${SIDEKIQ_PID} --environment ${RAILS_ENV} --logfile ${SIDEKIQ_LOG_FILE} --config ${SIDEKIQ_CONFIG_FILE} --daemon"
+CMD="cd ${APP_ROOT} && ${BUNDLE_PREFIX} bundle exec sidekiq --index 0 --pidfile ${SIDEKIQ_PID} --environment ${RAILS_ENV} --logfile ${SIDEKIQ_LOG_FILE} --config ${SIDEKIQ_CONFIG_FILE} --daemon"
 # echo "DEBUG:"
 # echo $CMD
 
