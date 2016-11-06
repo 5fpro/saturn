@@ -36,4 +36,4 @@ ${user_home}/.rbenv/bin/rbenv rehash
 echo "$shell" > /tmp/rbenv-install.sh
 chmod +x /tmp/rbenv-install.sh
 sudo -i -u $WHO bash -c "/tmp/rbenv-install.sh"
-# su -c "$shell" -m "$WHO"
+rm /tmp/rbenv-install.sh
