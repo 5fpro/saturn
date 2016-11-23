@@ -28,7 +28,7 @@ else
   line_for_ssl="\
   location /.well-known/acme-challenge/ { alias /var/www/dehydrated/; }
   "
-  sed -i "0,/listen 80/a ${line_for_ssl}" $nginx_conf
+  sed -i "/listen 80/a ${line_for_ssl}" $nginx_conf
   echo 'nginx reloading...'
   service nginx restart
 fi
