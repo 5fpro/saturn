@@ -44,7 +44,7 @@ else
     ssl on;
     ssl_certificate /etc/dehydrated/certs/${DOMAIN_NAME}/fullchain.pem;
     ssl_certificate_key /etc/dehydrated/certs/${DOMAIN_NAME}/privkey.pem;
-  " >> $nginx_conf
+  " $nginx_conf
 fi
 
 echo "Force ssl? (Y/n)"
