@@ -39,13 +39,15 @@ if grep -q "listen 443" $nginx_conf; then
   sed -i "s@# listen 443@listen 443@" $nginx_conf
   sed -i "s@# ssl@ssl@" $nginx_conf
 else
-  line_for_443="\
+  tmp_file="/tmp/line_for_443"
+  echo "\
     listen 443;
     ssl on;
     ssl_certificate /etc/dehydrated/certs/${DOMAIN_NAME}/fullchain.pem;
     ssl_certificate_key /etc/dehydrated/certs/${DOMAIN_NAME}/privkey.pem;
-"
-  sed -i "/listen 80/a ${line_for_443}" $nginx_conf
+" >> $tmp_file
+  sed -i "/listen 80/r ${tmp_file}" $nginx_conf
+  rm $tmp_file
 fi
 
 echo "Force ssl? (Y/n)"
