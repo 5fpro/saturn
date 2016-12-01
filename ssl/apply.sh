@@ -51,6 +51,9 @@ echo "\
     ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
     ssl_session_cache shared:SSL:20m;
     ssl_session_timeout 180m;
+
+    add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains\";
+
 " >> $tmp_file
 echo "SSL settings to conf?[Y/n]"
 read ssl_set
