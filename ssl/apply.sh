@@ -91,7 +91,9 @@ else
     listen 80;
     server_name ${DOMAIN_NAME};
     location /.well-known/acme-challenge/ { alias /var/www/dehydrated/; }
-    rewrite     ^   https://${DOMAIN_NAME}\$request_uri? permanent;
+    location / {
+      rewrite     ^   https://${DOMAIN_NAME}\$request_uri? permanent;
+    }
   }
   "
   if [[ $ssl_set == 'n' || $ssl_set == 'N' ]]; then
