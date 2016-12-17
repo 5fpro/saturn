@@ -8,9 +8,6 @@ PATH=$PATH:/usr/local/bin
 APP_ROOT={{APP_ROOT}}
 
 # deploy user
-RUBY_VERSION={{RUBY_VERSION}}
-
-# deploy user
 DEPLOY_USER={{DEPLOY_USER}}
 
 # deploy group
