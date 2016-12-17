@@ -24,9 +24,9 @@ read DEPLOY_GROUP
 if [ "$DEPLOY_GROUP" == "" ]; then DEPLOY_GROUP="apps"; fi;
 sed -i "s@{{DEPLOY_GROUP}}@${DEPLOY_GROUP}@" $init_file
 
-echo "pid dir path? (${APP_ROOT}/tmp/pids)"
+echo "pid dir path? (${APP_ROOT}/shared/tmp/pids)"
 read PID_PATH
-if [ "$PID_PATH" == "" ]; then PID_PATH="${APP_ROOT}/tmp/pids"; fi;
+if [ "$PID_PATH" == "" ]; then PID_PATH="${APP_ROOT}/shared/tmp/pids"; fi;
 sed -i "s@{{PID_PATH}}@${PID_PATH}@" $init_file
 
 echo "pid file path? (${PID_PATH}/lita.pid)"
@@ -40,9 +40,9 @@ read STAGE
 if [ "$STAGE" == "" ]; then STAGE="staging"; fi;
 sed -i "s@{{STAGE}}@${STAGE}@" $init_file
 
-echo "log file path? (${APP_ROOT}/log/${STAGE}.log)"
+echo "log file path? (${APP_ROOT}/shared/log/${STAGE}.log)"
 read LOG_FILE
-if [ "$LOG_FILE" == "" ]; then LOG_FILE="${APP_ROOT}/log/${STAGE}.log"; fi;
+if [ "$LOG_FILE" == "" ]; then LOG_FILE="${APP_ROOT}/shared/log/${STAGE}.log"; fi;
 sed -i "s@{{LOG_FILE}}@${LOG_FILE}@" $init_file
 
 echo "append '${init_file} start' to /etc/rc.local"
