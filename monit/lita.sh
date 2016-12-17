@@ -33,7 +33,7 @@ echo "pid file path? (${PID_PATH}/lita.pid)"
 read PID_FILE
 if [ "$PID_FILE" == "" ]; then PID_FILE="${PID_PATH}/lita.pid"; fi;
 sed -i "s@{{PID_FILE}}@${PID_FILE}@" $init_file
-sed -i "s@{{PID_FILE}}@${PID_FILE}@" $sidekiq_conf
+sed -i "s@{{PID_FILE}}@${PID_FILE}@" $monit_file
 
 echo "Your stage? (staging)"
 read STAGE
