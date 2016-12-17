@@ -29,11 +29,11 @@ read PID_PATH
 if [ "$PID_PATH" == "" ]; then PID_PATH="${APP_ROOT}/tmp/pids"; fi;
 sed -i "s@{{PID_PATH}}@${PID_PATH}@" $init_file
 
-echo "sidekiq pid file path? (${PID_PATH}/lita.pid)"
-read SIDEKIQ_PID
-if [ "$SIDEKIQ_PID" == "" ]; then SIDEKIQ_PID="${PID_PATH}/sidekiq-0.pid"; fi;
-sed -i "s@{{SIDEKIQ_PID}}@${SIDEKIQ_PID}@" $init_file
-sed -i "s@{{SIDEKIQ_PID}}@${SIDEKIQ_PID}@" $sidekiq_conf
+echo "pid file path? (${PID_PATH}/lita.pid)"
+read PID_FILE
+if [ "$PID_FILE" == "" ]; then PID_FILE="${PID_PATH}/lita.pid"; fi;
+sed -i "s@{{PID_FILE}}@${PID_FILE}@" $init_file
+sed -i "s@{{PID_FILE}}@${PID_FILE}@" $sidekiq_conf
 
 echo "Your stage? (staging)"
 read STAGE
