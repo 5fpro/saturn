@@ -8,7 +8,7 @@ chmod +x $init_file
 monit_file="/etc/monit/conf.d/lita-${APP_NAME}"
 curl -o $monit_file -sSL http://saturn.5fpro.com/monit/lita/monit.conf
 sed -i "s@{{INIT_FILE}}@${init_file}@" $monit_file
-sed -i "s@{{APP_NAME}}@${APP_NAME}-sidekiq@" $monit_file
+sed -i "s@{{APP_NAME}}@${APP_NAME}-lita@" $monit_file
 
 echo "Your app full path?"
 read APP_ROOT
