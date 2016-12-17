@@ -34,7 +34,7 @@ action="$1"
 set -u
 
 sig () {
-  test -s "$PID_FILE" && kill -$1 `cat $PID_FILE`
+  (test -s $PID_FILE) && (ps -p `cat $PID_FILE` > /dev/null 2>&1) && (kill -$1 `cat $PID_FILE`)
 }
 
 create_PID_PATH () {
