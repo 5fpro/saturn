@@ -10,7 +10,7 @@ curl -o $monit_file -sSL http://saturn.5fpro.com/monit/lita/monit.conf
 sed -i "s@{{INIT_FILE}}@${init_file}@" $monit_file
 sed -i "s@{{APP_NAME}}@${APP_NAME}-sidekiq@" $monit_file
 
-echo "Your app full path with current dir?"
+echo "Your app full path?"
 read APP_ROOT
 sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $init_file
 
