@@ -6,6 +6,7 @@ PATH=$PATH:/usr/local/bin
 
 # 你的 rails app dir
 APP_ROOT={{APP_ROOT}}
+APP_ROOT="${APP_ROOT}/current"
 
 # deploy user
 DEPLOY_USER={{DEPLOY_USER}}
