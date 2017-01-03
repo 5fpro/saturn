@@ -11,6 +11,34 @@ echo "Please make sure your IAM role has following permissions:cloudwatch:PutMet
 - cloudwatch:GetMetricStatistics
 - cloudwatch:ListMetrics
 - ec2:DescribeTags
+
+ref IAM policy:
+{
+    \"Version\": "2012-10-17",
+    \"Statement\": [
+        {
+            \"Sid\": \"Stmt1483448372000\",
+            \"Effect\": \"Allow\",
+            \"Action\": [
+                \"cloudwatch:GetMetricStatistics\",
+                \"cloudwatch:ListMetrics\"
+            ],
+            \"Resource\": [
+                \"*\"
+            ]
+        },
+        {
+            \"Sid\": \"Stmt1483448479000\",
+            \"Effect\": \"Allow\",
+            \"Action\": [
+                \"ec2:DescribeTags\"
+            ],
+            \"Resource\": [
+                \"*\"
+            ]
+        }
+    ]
+}
 "
 echo "press ENTER to contiune"
 read temp
