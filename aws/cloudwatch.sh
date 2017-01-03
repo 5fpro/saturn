@@ -14,7 +14,7 @@ echo "Please make sure your IAM role has following permissions:cloudwatch:PutMet
 
 ref IAM policy:
 {
-    \"Version\": "2012-10-17",
+    \"Version\": \"2012-10-17\",
     \"Statement\": [
         {
             \"Sid\": \"Stmt1483448372000\",
