@@ -10,6 +10,7 @@ cd aws-scripts-mon
 echo "Please make sure your IAM role has following permissions:cloudwatch:PutMetricData
 - cloudwatch:GetMetricStatistics
 - cloudwatch:ListMetrics
+- cloudwatch:PutMetricData
 - ec2:DescribeTags
 
 ref IAM policy:
@@ -21,7 +22,8 @@ ref IAM policy:
             \"Effect\": \"Allow\",
             \"Action\": [
                 \"cloudwatch:GetMetricStatistics\",
-                \"cloudwatch:ListMetrics\"
+                \"cloudwatch:ListMetrics\",
+                \"cloudwatch:PutMetricData\"
             ],
             \"Resource\": [
                 \"*\"
@@ -59,4 +61,8 @@ else
   echo "*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" >> /var/spool/cron/crontabs/root
 fi;
 
+echo "testing..."
+~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --verify --verbose
+~/aws-scripts-mon/mon-get-instance-stats.pl --recent-hours=1
+~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron
 echo "done!"
