@@ -55,6 +55,7 @@ sed -i "s@AWSAccessKeyId=@AWSAccessKeyId=${AWS_ACCESS_KEY}@" $CONFIG_FILE
 sed -i "s@AWSSecretKey=@AWSSecretKey=${AWS_SECRET_KEY}@" $CONFIG_FILE
 
 echo "*/5 * * * * root ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" > /etc/cron.d/aws-scripts-mon
+chmod 0600 /etc/cron.d/aws-scripts-mon
 service cron restart
 
 echo "testing..."
