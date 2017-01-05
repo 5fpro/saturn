@@ -54,12 +54,8 @@ CONFIG_FILE="/root/aws-scripts-mon/awscreds.template"
 sed -i "s@AWSAccessKeyId=@AWSAccessKeyId=${AWS_ACCESS_KEY}@" $CONFIG_FILE
 sed -i "s@AWSSecretKey=@AWSSecretKey=${AWS_SECRET_KEY}@" $CONFIG_FILE
 
-touch /var/spool/cron/crontabs/root
-if [[ `cat /var/spool/cron/crontabs/root | grep aws-scripts` ]]; then
-  echo "crontab already exists";
-else
-  echo "*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" >> /var/spool/cron/crontabs/root
-fi;
+echo "*/5 * * * * root ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" > /etc/cron.d/aws-scripts-mon
+service cron restart
 
 echo "testing..."
 ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --verify --verbose
