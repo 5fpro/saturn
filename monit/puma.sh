@@ -38,6 +38,7 @@ notify_slack_file="/root/monit-notify/${APP_NAME}-puma-restart-notify-to-slack.s
 notify_flowdock_file="/root/monit-notify/${APP_NAME}-puma-restart-notify-to-flowdock.sh"
 touch $notify_slack_file
 
+cmd_notify=""
 echo "flowdock token? (ENTER to skip)"
 read flow_token
 if [ "$flow_token" == "" ]; then
@@ -45,6 +46,8 @@ if [ "$flow_token" == "" ]; then
 else
   curl -o $notify_flowdock_file -sSL http://saturn.5fpro.com/monit/puma/flowdock-notify.sh
   sed -i "s@{{flow_token}}@${flow_token}@" $notify_flowdock_file
+  sed -i "s@{{RAILS_ENV}}@${RAILS_ENV}@" $notify_flowdock_file
+  cmd_notify="$cmd_notify && $notify_flowdock_file"
 fi;
 chmod +x $notify_flowdock_file
 
@@ -58,8 +61,11 @@ else
   curl -o $notify_slack_file -sSL http://saturn.5fpro.com/monit/puma/slack-notify.sh
   sed -i "s@{{slack_webhook}}@${slack_webhook}@" $notify_slack_file
   sed -i "s@{{slack_target}}@${slack_target}@" $notify_slack_file
+  sed -i "s@{{RAILS_ENV}}@${RAILS_ENV}@" $notify_slack_file
+  cmd_notify="$cmd_notify && $notify_flowdock_file"
 fi;
 chmod +x $notify_slack_file
+sed -i "s@{{cmd_notify}}@${cmd_notify}@" $conf_file
 
 echo "generating bin file in ${bin_file}"
 echo "generating conf file to ${conf_file}"
