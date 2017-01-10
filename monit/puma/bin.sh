@@ -9,6 +9,7 @@ TIMEOUT=60
 
 # rails app dir without current
 APP_ROOT={{APP_ROOT}}
+CURRENT_PATH="$APP_ROOT/current"
 SHARED_PATH="$APP_ROOT/shared"
 PID_DIR_PATH="$SHARED_PATH/tmp/pids"
 PID_FILE_PATH="$PID_DIR_PATH/puma.pid"
@@ -25,9 +26,9 @@ DEPLOY_USER={{DEPLOY_USER}}
 DEPLOY_GROUP={{DEPLOY_GROUP}}
 
 USER_HOME="/home/${DEPLOY_USER}"
-RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
+RUBY_VERSION=`cat ${CURRENT_PATH}/.ruby-version`
 BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
-CMD_PREFIX="(export RAILS_ENV=\"${RAILS_ENV}\" ; cd ${APP_ROOT}) && ${BUNDLE_PREFIX} bundle exec"
+CMD_PREFIX="(export RAILS_ENV=\"${RAILS_ENV}\" ; cd ${CURRENT_PATH}) && ${BUNDLE_PREFIX} bundle exec"
 
 action="$1"
 
