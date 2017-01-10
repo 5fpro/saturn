@@ -46,6 +46,7 @@ else
   curl -o $notify_flowdock_file -sSL http://saturn.5fpro.com/monit/puma/flowdock-notify.sh
   sed -i "s@{{flow_token}}@${flow_token}@" $notify_flowdock_file
 fi;
+chmod +x $notify_flowdock_file
 
 echo "slack webhook? (ENTER to skip)"
 read slack_webhook
@@ -58,6 +59,7 @@ else
   sed -i "s@{{slack_webhook}}@${slack_webhook}@" $notify_slack_file
   sed -i "s@{{slack_target}}@${slack_target}@" $notify_slack_file
 fi;
+chmod +x $notify_slack_file
 
 echo "generating bin file in ${bin_file}"
 echo "generating conf file to ${conf_file}"
