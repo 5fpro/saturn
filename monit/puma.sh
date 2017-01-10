@@ -9,7 +9,7 @@ conf_file="/etc/monit/conf.d/puma-${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/monit/puma/monit.conf
 sed -i "s@{{BIN_FILE}}@${bin_file}@" $conf_file
 
-sed -i "s@{{APP_NAME}}@${APP_NAME}-unicorn@" $conf_file
+sed -i "s@{{APP_NAME}}@${APP_NAME}-puma@" $conf_file
 
 echo "Your app full path (don't include current)?"
 read APP_ROOT
@@ -36,7 +36,7 @@ sed -i "s@{{PID_FILE_PATH}}@${PID_FILE_PATH}@" $conf_file
 mkdir -p /root/monit-notify
 notify_slack_file="/root/monit-notify/${APP_NAME}-puma-restart-notify-to-slack.sh"
 notify_flowdock_file="/root/monit-notify/${APP_NAME}-puma-restart-notify-to-flowdock.sh"
-cmd_notify=" && $notify_slack_file && $notify_flowdock_file"
+cmd_notify=" \\&\\& $notify_slack_file \\&\\& $notify_flowdock_file"
 sed -i "s@{{cmd_notify}}@${cmd_notify}@" $conf_file
 
 echo "flowdock token? (ENTER to skip)"

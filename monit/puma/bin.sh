@@ -27,8 +27,8 @@ DEPLOY_GROUP={{DEPLOY_GROUP}}
 
 USER_HOME="/home/${DEPLOY_USER}"
 RUBY_VERSION=`cat ${CURRENT_PATH}/.ruby-version`
-BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
-CMD_PREFIX="(export RAILS_ENV=\"${RAILS_ENV}\" ; cd ${CURRENT_PATH}) && ${BUNDLE_PREFIX} bundle exec"
+BUNDLE_PREFIX="RAILS_ENV=${RAILS_ENV} RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
+CMD_PREFIX="cd ${CURRENT_PATH} && ${BUNDLE_PREFIX} bundle exec"
 
 action="$1"
 
@@ -39,7 +39,7 @@ STOP_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} stop"
 set -u
 
 sig () {
- test -s "$UNICORN_PID" && kill -$1 `cat $UNICORN_PID`
+ test -s "$PID_FILE_PATH" && kill -$1 `cat $PID_FILE_PATH`
 }
 
 create_pid_path () {
