@@ -18,4 +18,7 @@ bash <(curl -s http://saturn.5fpro.com/monit/sidekiq.sh)
 
 # unicorn config
 bash <(curl -s http://saturn.5fpro.com/monit/unicorn.sh)
+
+# puma config
+bash <(curl -s http://saturn.5fpro.com/monit/puma.sh)
 ```
