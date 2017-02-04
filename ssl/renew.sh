@@ -3,7 +3,8 @@ read DOMAIN_NAME
 
 cron_file="vim /etc/cron.monthly/ssl-renewal-${DOMAIN_NAME}"
 renew_cmd="(/etc/dehydrated/dehydrated -c -d ${DOMAIN_NAME}) && (/etc/init.d/nginx restart)"
-echo $renew_cmd > $cron_file
+touch $cron_file
+echo $renew_cmd >> $cron_file
 
 echo "Test?(y/N)"
 read run
