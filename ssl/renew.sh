@@ -9,5 +9,5 @@ echo $renew_cmd >> $cron_file
 echo "Test?(y/N)"
 read run
 if [[ $run == 'y' ]]; then
-  bash -c $renew_cmd
+  bash -c "$renew_cmd"
 fi
