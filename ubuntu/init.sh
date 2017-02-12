@@ -1,6 +1,6 @@
 apt-get update
 apt-get upgrade -y
-apt-get install curl git-core -y
+apt-get install build-essential curl git-core -y
 
 echo "Daily ntpdate in /etc/cron.daily/ntpdate ..."
 ntpdate ntp.ubuntu.com
@@ -34,7 +34,15 @@ if [[ $create_user != 'n' ]]; then
 fi;
 
 echo "Install nginx? [y/N]"
-read $nginx
+read nginx
 if [[ $nginx == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/nginx/hi.sh)
 fi;
+
+echo "Install postgresql client lib? [y/N]"
+read pg
+if [[ $pg == 'y' ]]; then apt-get install -y libpq-dev; fi;
+
+echo "Install mysql client lib? [y/N]"
+read mysql
+if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
