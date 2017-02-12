@@ -108,5 +108,11 @@ else
   fi
 fi
 
-echo "Done!"
-service nginx restart
+echo "auto renew certs?[Y/n]"
+read autorenew
+if [[ $autorenew == 'n' ]] then
+  echo "Done!"
+  service nginx restart
+else
+  bash <(curl -s http://saturn.5fpro.com/ssl/renew.sh)
+fi
