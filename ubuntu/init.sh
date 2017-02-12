@@ -1,3 +1,12 @@
+echo "Create user? [Y/n]"
+read create_user
+echo "Install nginx? [y/N]"
+read nginx
+echo "Install postgresql client lib? [y/N]"
+read pg
+echo "Install mysql client lib? [y/N]"
+read mysql
+
 apt-get update
 apt-get upgrade -y
 apt-get install build-essential curl git-core -y
@@ -27,22 +36,16 @@ source ~/.bashrc
 sed -i "s@#force_color_prompt@force_color_prompt@" /home/ubuntu/.bashrc
 chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
-echo "Create user? [Y/n]"
-read create_user
 if [[ $create_user != 'n' ]]; then
   bash <(curl -s http://saturn.5fpro.com/ubuntu/adduser.sh)
 fi;
 
-echo "Install nginx? [y/N]"
-read nginx
 if [[ $nginx == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/nginx/hi.sh)
+  bash <(curl -s http://saturn.5fpro.com/monit/install.sh)
+  bash <(curl -s http://saturn.5fpro.com/monit/nginx.sh)
 fi;
 
-echo "Install postgresql client lib? [y/N]"
-read pg
 if [[ $pg == 'y' ]]; then apt-get install -y libpq-dev; fi;
 
-echo "Install mysql client lib? [y/N]"
-read mysql
 if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
