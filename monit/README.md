@@ -21,4 +21,7 @@ bash <(curl -s http://saturn.5fpro.com/monit/unicorn.sh)
 
 # puma config
 bash <(curl -s http://saturn.5fpro.com/monit/puma.sh)
+
+# lita config
+bash <(curl -s http://saturn.5fpro.com/monit/lita.sh)
 ```
