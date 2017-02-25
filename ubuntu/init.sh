@@ -6,6 +6,8 @@ echo "Install postgresql client lib? [y/N]"
 read pg
 echo "Install mysql client lib? [y/N]"
 read mysql
+echo "Pick timezone? [y/N]"
+read pick_timezone
 
 apt-get update
 apt-get upgrade -y
@@ -49,3 +51,5 @@ fi;
 if [[ $pg == 'y' ]]; then apt-get install -y libpq-dev; fi;
 
 if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
+
+if [[ $pick_timezone == 'y' ]]; then dpkg-reconfigure tzdata; fi;
