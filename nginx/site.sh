@@ -80,3 +80,8 @@ else
 fi;
 service nginx reload
 rm $force_redirect_conf
+
+# log rotate
+log_rotate_dist="/etc/logrotate.d/rails-${APP_NAME}"
+curl -o $log_rotate_dist -sSL http://saturn.5fpro.com/nginx/site-log-rotate.conf
+sed -i "s@{{APP_ROOT}}@${APP_ROOT}@" $log_rotate_dist
