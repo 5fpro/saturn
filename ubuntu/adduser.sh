@@ -3,6 +3,12 @@ read user
 if [[ $user == "" ]]; then user="apps"; fi;
 echo "Public key for ssh? (ENTER to skip)"
 read public_key
+echo "Install rbenv?[y/N]"
+read rbenv
+echo "Install nodejs?[y/N]"
+read nodejs
+echo "Install AWS-cli?[y/N]"
+read awscli
 
 if [ -f "/home/${user}/.bashrc" ]; then
   echo "User ${user} exists"
@@ -23,14 +29,14 @@ bashrc="/home/${user}/.bashrc"
 sed -i "s@#force_color_prompt@force_color_prompt@" $bashrc
 chown $user:$user /home/$user/.bashrc
 
-echo "Install rbenv?[y/N]"
-read rbenv
 if [[ $rbenv == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/rbenv/install.sh)
 fi;
 
-echo "Install nodejs?[y/N]"
-read nodejs
 if [[ $nodejs == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/nodejs/install.sh)
+fi;
+
+if [[ $awscli == 'y' ]]; then
+  bash <(curl -s http://saturn.5fpro.com/ubuntu/aws-cli.sh)
 fi;
