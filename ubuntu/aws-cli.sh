@@ -8,7 +8,7 @@ user_home="/home/${user}"
 shell="\
 curl -O https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py --user
-echo \"export PATH=~/.local/bin:$PATH\" >> $user_home/.bashrc
+echo \"export PATH=\\\"\$HOME/.local/bin:\$PATH\\\"\" >> $user_home/.bashrc
 source $user_home/.bashrc
 pip install awscli --upgrade --user
 aws configure
