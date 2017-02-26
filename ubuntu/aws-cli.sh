@@ -5,11 +5,12 @@ if [[ $user == "" ]]; then user="apps"; fi;
 apt-get install python3.4 python3-dev -y
 
 user_home="/home/${user}"
+str_path='\"$HOME/.local/bin:$PATH\"'
 shell="\
 curl -O https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py --user
-echo \"export PATH=\\\"\$HOME/.local/bin:\$PATH\\\"\" >> $user_home/.bashrc
-source $user_home/.bashrc
+echo \"export PATH=$str_path\" >> $user_home/.bashrc
+source ~/.bashrc
 pip install awscli --upgrade --user
 aws configure
 "
