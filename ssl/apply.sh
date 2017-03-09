@@ -33,6 +33,7 @@ else
   service nginx restart
 fi
 
+/etc/dehydrated/dehydrated --register --accept-terms
 /etc/dehydrated/dehydrated -c -d $DOMAIN_NAME
 
 # Setting SSL
