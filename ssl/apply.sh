@@ -41,7 +41,6 @@ fi
 tmp_file="/tmp/line_for_443"
 echo "\
     listen 443 ssl http2;
-    listen [::]:443 ssl http2;
     ssl on;
     ssl_certificate /etc/dehydrated/certs/${DOMAIN_NAME}/fullchain.pem;
     ssl_certificate_key /etc/dehydrated/certs/${DOMAIN_NAME}/privkey.pem;

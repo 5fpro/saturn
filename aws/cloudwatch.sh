@@ -58,6 +58,9 @@ echo "*/5 * * * * root ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --d
 chmod 0600 /etc/cron.d/aws-scripts-mon
 service cron restart
 
+echo "set cache clearing after reboot"
+clear_sh="rm -rf /var/tmp/aws-mon"
+if grep -q "${clear_sh}" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$clear_sh"'\n' /etc/rc.local; fi;
 echo "testing..."
 ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --verify --verbose
 ~/aws-scripts-mon/mon-get-instance-stats.pl --recent-hours=1
