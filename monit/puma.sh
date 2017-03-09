@@ -5,7 +5,8 @@ bin_file="/etc/init.d/puma-${APP_NAME}"
 curl -o $bin_file -sSL http://saturn.5fpro.com/monit/puma/bin.sh
 chmod +x $bin_file
 
-conf_file="/etc/monit/conf.d/puma-${APP_NAME}"
+conf_file="/etc/monit/conf-available/puma-${APP_NAME}"
+linked_file="/etc/monit/conf-enabled/puma-${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/monit/puma/monit.conf
 sed -i "s@{{BIN_FILE}}@${bin_file}@" $conf_file
 
@@ -69,4 +70,5 @@ echo "generating conf file to ${conf_file}"
 echo "append '${bin_file} start' to /etc/rc.local"
 if grep -q "${bin_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$bin_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
+ln -s $conf_file $linked_file
 /etc/init.d/monit reload

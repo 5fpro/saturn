@@ -5,7 +5,8 @@ unicorn_file="/etc/init.d/unicorn-${APP_NAME}"
 curl -o $unicorn_file -sSL http://saturn.5fpro.com/monit/unicorn/bin.sh
 chmod +x $unicorn_file
 
-unicorn_conf="/etc/monit/conf.d/unicorn-${APP_NAME}"
+unicorn_conf="/etc/monit/conf-available/unicorn-${APP_NAME}"
+linked_file="/etc/monit/conf-enabled/unicorn-${APP_NAME}"
 curl -o $unicorn_conf -sSL http://saturn.5fpro.com/monit/unicorn/monit.conf
 sed -i "s@{{UNICORN_BIN_FILE}}@${unicorn_file}@" $unicorn_conf
 
@@ -51,4 +52,5 @@ echo "generating conf file to ${unicorn_conf}"
 echo "append '${unicorn_file} start' to /etc/rc.local"
 if grep -q "${unicorn_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$unicorn_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
+ln -s $unicorn_conf $linked_file
 /etc/init.d/monit reload

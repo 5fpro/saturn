@@ -1,4 +1,5 @@
-nginx_conf="/etc/monit/conf.d/nginx"
+nginx_conf="/etc/monit/conf-available/nginx"
+linked_file="/etc/monit/conf-enabled/nginx"
 curl -o $nginx_conf -sSL http://saturn.5fpro.com/monit/nginx/monit.conf
 
 echo "nginx pid file? (/var/run/nginx.pid)"
@@ -18,4 +19,5 @@ sed -i "s@{{NGINX_STOP}}@${NGINX_STOP}@" $nginx_conf
 
 echo "Writing conf file to ${nginx_conf}"
 echo "restarting monit..."
+ln -s $nginx_conf $linked_file
 /etc/init.d/monit reload

@@ -5,7 +5,8 @@ init_file="/etc/init.d/lita-${APP_NAME}"
 curl -o $init_file -sSL http://saturn.5fpro.com/monit/lita/bin.sh
 chmod +x $init_file
 
-monit_file="/etc/monit/conf.d/lita-${APP_NAME}"
+monit_file="/etc/monit/conf-available/lita-${APP_NAME}"
+linked_file="/etc/monit/conf-enabled/lita-${APP_NAME}"
 curl -o $monit_file -sSL http://saturn.5fpro.com/monit/lita/monit.conf
 sed -i "s@{{INIT_FILE}}@${init_file}@" $monit_file
 sed -i "s@{{APP_NAME}}@${APP_NAME}-lita@" $monit_file
@@ -48,4 +49,5 @@ sed -i "s@{{LOG_FILE}}@${LOG_FILE}@" $init_file
 echo "append '${init_file} start' to /etc/rc.local"
 if grep -q "${init_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$init_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
+ln -s $monit_file $linked_file
 /etc/init.d/monit reload
