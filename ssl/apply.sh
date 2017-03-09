@@ -110,7 +110,7 @@ fi
 
 echo "auto renew certs?[Y/n]"
 read autorenew
-if [[ $autorenew == 'n' ]] then
+if [[ $autorenew == 'n' ]]; then
   echo "Done!"
   service nginx restart
 else
