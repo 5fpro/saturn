@@ -1,3 +1,4 @@
+bash <(curl -s http://saturn.5fpro.com/ubuntu/hostname.sh)
 echo "Create user? [Y/n]"
 read create_user
 echo "Install nginx? [y/N]"
@@ -10,6 +11,8 @@ echo "Install imagemagick? [y/N]"
 read imagemagick
 echo "Pick timezone? [y/N]"
 read pick_timezone
+echo "Setup aws cloudwatch monitoring? [y/N]"
+read awsmo
 
 apt-get update
 apt-get upgrade -y
@@ -57,3 +60,7 @@ if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
 if [[ $imagemagick == 'y' ]]; then apt-get install -y imagemagick; fi;
 
 if [[ $pick_timezone == 'y' ]]; then dpkg-reconfigure tzdata; fi;
+
+if [[ $awsmo == 'y' ]]; then
+  bash <(curl -s http://saturn.5fpro.com/aws/cloudwatch.sh)
+fi;
