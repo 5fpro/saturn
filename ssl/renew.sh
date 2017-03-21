@@ -4,7 +4,9 @@ read DOMAIN_NAME
 cron_file="/etc/cron.monthly/ssl-renewal-${DOMAIN_NAME}"
 renew_cmd="(/etc/dehydrated/dehydrated -c -d ${DOMAIN_NAME}) && (/etc/init.d/nginx restart)"
 touch $cron_file
+echo "#!/bin/sh" >> $cron_file
 echo $renew_cmd >> $cron_file
+chmod +x $cron_file
 
 echo "Test?(y/N)"
 read run
