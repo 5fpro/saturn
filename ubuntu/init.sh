@@ -20,7 +20,11 @@ apt-get install build-essential curl git-core -y
 
 echo "Daily ntpdate in /etc/cron.daily/ntpdate ..."
 ntpdate ntp.ubuntu.com
-echo "ntpdate ntp.ubuntu.com" >> /etc/cron.daily/ntpdate
+ntpdate_bin="/etc/cron.daily/ntpdate"
+touch $ntpdate_bin
+echo "#!/bin/sh" >> $ntpdate_bin
+echo "ntpdate ntp.ubuntu.com" >> $ntpdate_bin
+chmod +x $ntpdate_bin
 
 echo "Language pack..."
 locale-gen zh_TW.UTF-8
