@@ -4,4 +4,4 @@ if [[ $SH_COLOR_FILE == "" ]]; then
   read SH_COLOR_FILE
 fi;
 SH_COLOR=`curl http://saturn.5fpro.com/ubuntu/sh-color.setting`
-echo $SH_COLOR >> $SH_COLOR_FILE
+echo "$SH_COLOR" >> $SH_COLOR_FILE
