@@ -42,11 +42,10 @@ else
 fi;
 
 echo "Colorful command line..."
-SH_COLOR_FILE="~/.bashrc"
-bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
+curl http://saturn.5fpro.com/ubuntu/sh-color.sh|bash -s ~/.bashrc
 SH_COLOR_FILE="/home/ubuntu/.bashrc"
-bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
-chown ubuntu:ubuntu /home/ubuntu/.bashrc
+curl http://saturn.5fpro.com/ubuntu/sh-color.sh|bash -s $SH_COLOR_FILE
+chown ubuntu:ubuntu $SH_COLOR_FILE
 
 if [[ $create_user != 'n' ]]; then
   bash <(curl -s http://saturn.5fpro.com/ubuntu/adduser.sh)

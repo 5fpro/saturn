@@ -26,7 +26,7 @@ if [[ $public_key != "" ]]; then
 fi;
 
 SH_COLOR_FILE="/home/${user}/.bashrc"
-bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
+curl http://saturn.5fpro.com/ubuntu/sh-color.sh|bash -s $SH_COLOR_FILE
 chown $user:$user $SH_COLOR_FILE
 
 if [[ $rbenv == 'y' ]]; then
