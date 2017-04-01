@@ -25,9 +25,9 @@ if [[ $public_key != "" ]]; then
   chown -R $user:$user /home/$user/.ssh
 fi;
 
-bashrc="/home/${user}/.bashrc"
-sed -i "s@#force_color_prompt@force_color_prompt@" $bashrc
-chown $user:$user /home/$user/.bashrc
+SH_COLOR_FILE="/home/${user}/.bashrc"
+bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
+chown $user:$user $SH_COLOR_FILE
 
 if [[ $rbenv == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/rbenv/install.sh)

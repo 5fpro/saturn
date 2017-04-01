@@ -42,9 +42,10 @@ else
 fi;
 
 echo "Colorful command line..."
-sed -i "s@#force_color_prompt@force_color_prompt@" ~/.bashrc
-source ~/.bashrc
-sed -i "s@#force_color_prompt@force_color_prompt@" /home/ubuntu/.bashrc
+SH_COLOR_FILE="~/.bashrc"
+bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
+SH_COLOR_FILE="/home/ubuntu/.bashrc"
+bash <(curl -s http://saturn.5fpro.com/ubuntu/sh-color.sh)
 chown ubuntu:ubuntu /home/ubuntu/.bashrc
 
 if [[ $create_user != 'n' ]]; then
