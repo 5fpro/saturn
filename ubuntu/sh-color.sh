@@ -1,3 +1,4 @@
+SH_COLOR_FILE=$1
 if [[ $SH_COLOR_FILE == "" ]]; then
   echo "Target appended file (may .bashrc)?"
   read SH_COLOR_FILE
