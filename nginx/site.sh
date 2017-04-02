@@ -40,7 +40,7 @@ read ASSETS_FOLDERS
 if [ "$ASSETS_FOLDERS" == "" ]; then ASSETS_FOLDERS="${DEFAULT_ASSETS_FOLDERS}"; fi;
 sed -i "s@{{ASSETS_FOLDERS}}@${ASSETS_FOLDERS}@" $conf_file
 
-DEFAULT_ASSETS_FILE_EXTS="jpg|png|svg|gif|css|htm|ico|fon|fnt"
+DEFAULT_ASSETS_FILE_EXTS="htm|ico|fon|fnt"
 echo "Assets files extensions under ${APP_ROOT}/current/public? (${DEFAULT_ASSETS_FILE_EXTS})"
 read ASSETS_FILE_EXTS
 if [ "$ASSETS_FILE_EXTS" == "" ]; then ASSETS_FILE_EXTS="${DEFAULT_ASSETS_FILE_EXTS}"; fi;
