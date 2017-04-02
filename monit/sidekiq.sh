@@ -1,11 +1,12 @@
 echo "rails app name?"
 read APP_NAME
 
-sidekiq_file="/etc/init.d/sidekiq-${APP_NAME}"
+sidekiq_file="/usr/sbin/sidekiq-${APP_NAME}"
 curl -o $sidekiq_file -sSL http://saturn.5fpro.com/monit/sidekiq/bin.sh
 chmod +x $sidekiq_file
 
-sidekiq_conf="/etc/monit/conf.d/sidekiq-${APP_NAME}"
+sidekiq_conf="/etc/monit/conf-available/sidekiq-${APP_NAME}"
+linked_file="/etc/monit/conf-enabled/sidekiq-${APP_NAME}"
 curl -o $sidekiq_conf -sSL http://saturn.5fpro.com/monit/sidekiq/monit.conf
 sed -i "s@{{SIDEKIQ_BIN_FILE}}@${sidekiq_file}@" $sidekiq_conf
 sed -i "s@{{APP_NAME}}@${APP_NAME}-sidekiq@" $sidekiq_conf
@@ -55,4 +56,5 @@ echo "generating conf file to ${sidekiq_conf}"
 echo "append '${sidekiq_file} start' to /etc/rc.local"
 if grep -q "${sidekiq_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$sidekiq_file"' start\n' /etc/rc.local; fi;
 echo "restarting monit..."
-/etc/init.d/monit reload
+ln -s $sidekiq_conf $linked_file
+systemctl restart monit
