@@ -3,11 +3,10 @@ Description=Puma for {{APP_NAME}} app
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 ExecStart={{START_CMD}}
 ExecStop={{STOP_CMD}}
 ExecReload={{RESTART_CMD}}
-PIDFile={{PID_FILE_PATH}}
 
 [Install]
 WantedBy=multi-user.target
