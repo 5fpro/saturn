@@ -38,7 +38,7 @@ START_CMD="${CMD_PREFIX} puma -C ${CONFIG_FILE_PATH} --daemon"
 RESTART_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} restart"
 STOP_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} stop"
 
-if [[ $me == "root" ]]; then
+if [ $me = "root" ]; then
   START_CMD="sudo -H -u $DEPLOY_USER bash -c \"$START_CMD\""
   STOP_CMD="sudo -H -u $DEPLOY_USER bash -c \"$STOP_CMD\""
   RESTART_CMD="sudo -H -u $DEPLOY_USER bash -c \"$RESTART_CMD\""
@@ -60,13 +60,13 @@ case $action in
 start)
   create_pid_path
   sig 0 && echo >&2 "Already running" && exit 0
-  $START_CMD
+  bash -c "$START_CMD"
 ;;
 stop)
-  $STOP_CMD
+  bash -c "$STOP_CMD"
 ;;
 restart)
-  $RESTART_CMD
+  bash -c "$RESTART_CMD"
 ;;
 *)
  echo >&2 "Usage: $0 <start|stop|restart>"
