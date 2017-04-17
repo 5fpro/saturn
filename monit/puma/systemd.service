@@ -7,6 +7,7 @@ Type=forking
 ExecStart={{START_CMD}}
 ExecStop={{STOP_CMD}}
 ExecReload={{RESTART_CMD}}
+PIDFile={{PID_FILE_PATH}}
 
 [Install]
 WantedBy=multi-user.target

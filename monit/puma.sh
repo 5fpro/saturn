@@ -44,6 +44,7 @@ sed -i "s@{{DEPLOY_GROUP}}@${DEPLOY_GROUP}@" $bin_file
 
 PID_FILE_PATH="${APP_ROOT}/shared/tmp/pids/puma.pid"
 sed -i "s@{{PID_FILE_PATH}}@${PID_FILE_PATH}@" $conf_file
+sed -i "s@{{PID_FILE_PATH}}@${PID_FILE_PATH}@" $systemd_service
 
 mkdir -p /root/monit-notify
 notify_slack_file="/root/monit-notify/${APP_NAME}-puma-restart-notify-to-slack.sh"
