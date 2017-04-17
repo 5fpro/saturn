@@ -32,9 +32,17 @@ CMD_PREFIX="cd ${CURRENT_PATH} && ${BUNDLE_PREFIX} bundle exec"
 
 action="$1"
 
+me=$(whoami)
+
 START_CMD="${CMD_PREFIX} puma -C ${CONFIG_FILE_PATH} --daemon"
 RESTART_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} restart"
 STOP_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} stop"
+
+if [[ $me == "root" ]]; then
+  START_CMD="sudo -H -u $DEPLOY_USER bash -c \"$START_CMD\""
+  STOP_CMD="sudo -H -u $DEPLOY_USER bash -c \"$STOP_CMD\""
+  RESTART_CMD="sudo -H -u $DEPLOY_USER bash -c \"$RESTART_CMD\""
+fi;
 
 set -u
 
@@ -46,31 +54,19 @@ create_pid_path () {
  test -d $PID_DIR_PATH || (mkdir -p $PID_DIR_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $PID_DIR_PATH)
 }
 
-me=$(whoami)
+
 
 case $action in
 start)
   create_pid_path
   sig 0 && echo >&2 "Already running" && exit 0
-  if [ $me == 'root' ]; then
-    sudo -H -u $DEPLOY_USER bash -c "$START_CMD"
-  else
-    $START_CMD
-  fi;
+  $START_CMD
 ;;
 stop)
-  if [ $me == 'root' ]; then
-    sudo -H -u $DEPLOY_USER bash -c "$STOP_CMD"
-  else
-    $STOP_CMD
-  fi;
+  $STOP_CMD
 ;;
 restart)
-  if [ $me == 'root' ]; then
-    sudo -H -u $DEPLOY_USER bash -c "$RESTART_CMD"
-  else
-    $RESTART_CMD
-  fi;
+  $RESTART_CMD
 ;;
 *)
  echo >&2 "Usage: $0 <start|stop|restart>"
