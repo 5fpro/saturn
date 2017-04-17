@@ -8,5 +8,6 @@ if [[ $hname != "" ]]; then
   if grep -q "${line}" "/etc/hosts"; then echo "exists"; else echo "$line" >> "/etc/hosts"; fi;
   hostname $hname
   toilet --gay -f standard $hname > /etc/motd
+  echo $hname > /etc/hostname
   echo 'done!'
 fi;
