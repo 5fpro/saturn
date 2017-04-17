@@ -1,3 +1,6 @@
+### BEGIN INIT INFO
+### END INIT INFO
+
 [Unit]
 Description=Puma for {{APP_NAME}} app
 After=network.target
