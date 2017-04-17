@@ -11,6 +11,7 @@ PIDFile={{PID_FILE_PATH}}
 ExecStart={{START_CMD}}
 ExecStop={{STOP_CMD}}
 ExecReload={{RESTART_CMD}}
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
