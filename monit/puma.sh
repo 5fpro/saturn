@@ -1,7 +1,7 @@
 echo "rails dir or app name?"
 read APP_NAME
 
-bin_file="/etc/init.d/puma-${APP_NAME}"
+bin_file="/usr/bin/puma-${APP_NAME}"
 curl -o $bin_file -sSL http://saturn.5fpro.com/monit/puma/bin.sh
 chmod +x $bin_file
 

@@ -46,17 +46,31 @@ create_pid_path () {
  test -d $PID_DIR_PATH || (mkdir -p $PID_DIR_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $PID_DIR_PATH)
 }
 
+me=$(whoami)
+
 case $action in
 start)
- create_pid_path
- sig 0 && echo >&2 "Already running" && exit 0
- sudo -H -u $DEPLOY_USER bash -c "$START_CMD"
+  create_pid_path
+  sig 0 && echo >&2 "Already running" && exit 0
+  if [ $me == 'root' ]; then
+    sudo -H -u $DEPLOY_USER bash -c "$START_CMD"
+  else
+    $START_CMD
+  fi;
 ;;
 stop)
- sudo -H -u $DEPLOY_USER bash -c "$STOP_CMD"
+  if [ $me == 'root' ]; then
+    sudo -H -u $DEPLOY_USER bash -c "$STOP_CMD"
+  else
+    $STOP_CMD
+  fi;
 ;;
 restart)
- sudo -H -u $DEPLOY_USER bash -c "$RESTART_CMD"
+  if [ $me == 'root' ]; then
+    sudo -H -u $DEPLOY_USER bash -c "$RESTART_CMD"
+  else
+    $RESTART_CMD
+  fi;
 ;;
 *)
  echo >&2 "Usage: $0 <start|stop|restart>"
