@@ -2,8 +2,11 @@ echo "rails dir or app name?"
 read APP_NAME
 
 bin_file="/usr/bin/puma-${APP_NAME}"
+systemd_service="/etc/systemd/system/puma-${APP_NAME}.service"
 curl -o $bin_file -sSL http://saturn.5fpro.com/monit/puma/bin.sh
 chmod +x $bin_file
+curl -o $systemd_service -sSL http://saturn.5fpro.com/monit/puma/systemd.service
+chmod 644 $systemd_service
 
 conf_file="/etc/monit/conf-available/puma-${APP_NAME}"
 linked_file="/etc/monit/conf-enabled/puma-${APP_NAME}"
@@ -11,6 +14,14 @@ curl -o $conf_file -sSL http://saturn.5fpro.com/monit/puma/monit.conf
 sed -i "s@{{BIN_FILE}}@${bin_file}@" $conf_file
 
 sed -i "s@{{APP_NAME}}@${APP_NAME}-puma@" $conf_file
+sed -i "s@{{APP_NAME}}@${APP_NAME}@" $systemd_service
+
+start_cmd="$bin_file start"
+stop_cmd="$bin_file stop"
+restart_cmd="$bin_file restart"
+sed -i "s@{{START_CMD}}@${start_cmd}@" $systemd_service
+sed -i "s@{{STOP_CMD}}@${stop_cmd}@" $systemd_service
+sed -i "s@{{RESTART_CMD}}@${restart_cmd}@" $systemd_service
 
 echo "Your app full path (don't include current)?"
 read APP_ROOT
@@ -72,3 +83,6 @@ if grep -q "${bin_file} start" "/etc/rc.local"; then echo "already appened"; els
 echo "restarting monit..."
 ln -s $conf_file $linked_file
 /etc/init.d/monit reload
+echo "Enabling systemd service..."
+systemctl daemon-reload
+systemctl start $APP_NAME.service
