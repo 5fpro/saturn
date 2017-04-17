@@ -7,14 +7,14 @@ read NGINX_PID
 if [ "$NGINX_PID" == "" ]; then NGINX_PID="/var/run/nginx.pid"; fi;
 sed -i "s@{{NGINX_PID}}@${NGINX_PID}@" $nginx_conf
 
-echo "start nginx? (/etc/init.d/nginx start)"
+echo "start nginx? (/bin/bash systemctl start nginx)"
 read NGINX_START
-if [ "$NGINX_START" == "" ]; then NGINX_START="/etc/init.d/nginx start"; fi;
+if [ "$NGINX_START" == "" ]; then NGINX_START="/bin/bash systemctl start nginx"; fi;
 sed -i "s@{{NGINX_START}}@${NGINX_START}@" $nginx_conf
 
-echo "stop nginx? (/etc/init.d/nginx stop)"
+echo "stop nginx? (/bin/bash systemctl stop nginx)"
 read NGINX_STOP
-if [ "$NGINX_STOP" == "" ]; then NGINX_STOP="/etc/init.d/nginx stop"; fi;
+if [ "$NGINX_STOP" == "" ]; then NGINX_STOP="/bin/bash systemctl stop nginx"; fi;
 sed -i "s@{{NGINX_STOP}}@${NGINX_STOP}@" $nginx_conf
 
 echo "Writing conf file to ${nginx_conf}"
