@@ -86,4 +86,4 @@ ln -s $conf_file $linked_file
 echo "Enabling systemd service..."
 chmod 644 $systemd_service
 systemctl daemon-reload
-systemctl start $APP_NAME.service
+systemctl start puma-$APP_NAME.service
