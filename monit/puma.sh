@@ -84,5 +84,6 @@ echo "restarting monit..."
 ln -s $conf_file $linked_file
 /etc/init.d/monit reload
 echo "Enabling systemd service..."
+chmod 644 $systemd_service
 systemctl daemon-reload
 systemctl start $APP_NAME.service
