@@ -13,7 +13,7 @@ linked_file="/etc/monit/conf-enabled/puma-${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/monit/puma/monit.conf
 sed -i "s@{{BIN_FILE}}@${bin_file}@" $conf_file
 
-sed -i "s@{{APP_NAME}}@${APP_NAME}-puma@" $conf_file
+sed -i "s@{{APP_NAME}}@${APP_NAME}@" $conf_file
 sed -i "s@{{APP_NAME}}@${APP_NAME}@" $systemd_service
 
 start_cmd="$bin_file start"
