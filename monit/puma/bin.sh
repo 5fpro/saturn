@@ -34,7 +34,7 @@ action="$1"
 
 me=$(whoami)
 
-START_CMD="${CMD_PREFIX} puma -C ${CONFIG_FILE_PATH}"
+START_CMD="${CMD_PREFIX} puma -C ${CONFIG_FILE_PATH} --daemon"
 RESTART_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} restart"
 STOP_CMD="${CMD_PREFIX} pumactl -S ${STATE_FILE_PATH} stop"
 
