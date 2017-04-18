@@ -2,19 +2,18 @@ echo "rails dir or app name?"
 read APP_NAME
 
 bin_file="/usr/bin/puma-${APP_NAME}"
-systemd_service="/etc/systemd/system/puma-${APP_NAME}.service"
 curl -o $bin_file -sSL http://saturn.5fpro.com/monit/puma/bin.sh
 chmod +x $bin_file
+
+systemd_service="/etc/systemd/system/puma-${APP_NAME}.service"
 curl -o $systemd_service -sSL http://saturn.5fpro.com/monit/puma/systemd.service
 chmod 644 $systemd_service
+sed -i "s@{{APP_NAME}}@${APP_NAME}@" $systemd_service
 
 conf_file="/etc/monit/conf-available/puma-${APP_NAME}"
 linked_file="/etc/monit/conf-enabled/puma-${APP_NAME}"
 curl -o $conf_file -sSL http://saturn.5fpro.com/monit/puma/monit.conf
-sed -i "s@{{BIN_FILE}}@${bin_file}@" $conf_file
-
 sed -i "s@{{APP_NAME}}@${APP_NAME}@" $conf_file
-sed -i "s@{{APP_NAME}}@${APP_NAME}@" $systemd_service
 
 start_cmd="$bin_file start"
 stop_cmd="$bin_file stop"

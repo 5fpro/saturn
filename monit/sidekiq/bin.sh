@@ -4,8 +4,8 @@ set -e
 # Include Bundler path
 PATH=$PATH:/usr/local/bin
 
-# 你的 rails app dir
-APP_ROOT={{APP_ROOT}}
+# rails app dir
+APP_ROOT={{APP_ROOT}}/current
 
 # rails env
 RAILS_ENV={{RAILS_ENV}}
