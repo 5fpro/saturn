@@ -1,7 +1,7 @@
 echo "rails app name?"
 read APP_NAME
 
-bin_file="/usr/sbin/sidekiq-${APP_NAME}"
+bin_file="/usr/bin/sidekiq-${APP_NAME}"
 curl -o $bin_file -sSL http://saturn.5fpro.com/monit/sidekiq/bin.sh
 chmod +x $bin_file
 
