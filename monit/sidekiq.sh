@@ -70,5 +70,6 @@ if grep -q "${bin_file} start" "/etc/rc.local"; then echo "already appened"; els
 echo "restarting monit..."
 ln -s $conf_file $linked_file
 systemctl restart monit
+echo "Enabling systemd service..."
 systemctl daemon-reload
 systemctl start sidekiq-$APP_NAME.service

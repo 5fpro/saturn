@@ -36,7 +36,7 @@ CMD_PREFIX="cd $APP_ROOT && $BUNDLE_PREFIX bundle exec"
 me=$(whoami)
 
 START_CMD="${CMD_PREFIX} sidekiq --index 0 --pidfile $SIDEKIQ_PID --environment $RAILS_ENV --logfile $SIDEKIQ_LOG_FILE --config $SIDEKIQ_CONFIG_FILE --daemon"
-STOP_CMD="${CMD_PREFIX} sidekiqctl stop ${SIDEKIQ_PID_PATH} 10"
+STOP_CMD="${CMD_PREFIX} sidekiqctl stop ${SIDEKIQ_PID} 10"
 RESTART_CMD="$STOP_CMD; $START_CMD"
 
 if [ $me = "root" ]; then

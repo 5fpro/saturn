@@ -9,5 +9,6 @@ if [[ $hname != "" ]]; then
   hostname $hname
   toilet --gay -f standard $hname > /etc/motd
   echo $hname > /etc/hostname
+  rm -rf /var/tmp/aws-mon
   echo 'done!'
 fi;
