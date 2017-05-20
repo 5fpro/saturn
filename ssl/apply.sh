@@ -6,7 +6,7 @@ echo "to setup."
 echo "(press ENTER to continue)"
 read GO
 
-echo "Domain name?"
+echo "Domain name? (For multiple domains example: 'example.com -d my.example.com'"
 read DOMAIN_NAME
 
 echo "Nginx config file under /etc/nginx/sites-available/ ?"
