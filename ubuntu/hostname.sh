@@ -1,6 +1,7 @@
 echo "Enter your server identify(name), without space"
 read hname
 
+apt-get update
 apt-get install -y figlet toilet
 
 if [[ $hname != "" ]]; then
