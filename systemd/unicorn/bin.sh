@@ -52,6 +52,8 @@ create_pid_path () {
  test -d $UNICORN_PID_PATH || (mkdir -p $UNICORN_PID_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $UNICORN_PID_PATH)
 }
 
+RESTART_CMD="kill -s USR2 `cat $UNICORN_PID`"
+
 case $action in
 start)
  create_pid_path
@@ -62,8 +64,11 @@ stop)
  sig QUIT && exit 0
  echo >&2 "Not running"
 ;;
+restart)
+  bash -c "$RESTART_CMD"
+;;
 *)
- echo >&2 "Usage: $0 <start|stop>"
+ echo >&2 "Usage: $0 <start|stop|restart>"
  exit 1
 ;;
 esac
