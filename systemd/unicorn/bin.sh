@@ -41,7 +41,7 @@ me=$(whoami)
 # full command
 START_CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; ${BUNDLE_PREFIX} bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
 pid_number=`(test -f $UNICORN_PID && cat $UNICORN_PID) || (ps -ef | grep "master -c $UNICORN_CONFIG_FILE" | grep -v grep | awk '{print $2}')`
-STOP_CMD="kill -0 $pid_number"
+STOP_CMD="kill -s QUIT $pid_number"
 RESTART_CMD="kill -s USR2 $pid_number"
 
 if [ $me = "root" ]; then
@@ -55,7 +55,7 @@ set -u
 
 # 檢查PID, 並且砍掉該服務
 sig () {
-  kill -$1 $pid_number
+  test -n $pid_number && kill -$1 $pid_number
 }
 
 # 檢查路徑, 如果不存在就自行開路徑
@@ -67,7 +67,7 @@ create_if_not_exists () {
 case $action in
 start)
   create_if_not_exists
-  sig 0 && echo >&2 "Already running" && exit 0
+  # sig 0 && echo >&2 "Already running" && exit 0
   bash -c "$START_CMD"
 ;;
 stop)
