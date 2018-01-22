@@ -55,7 +55,7 @@ sed -i "s@{{UNICORN_CONFIG_FILE}}@${UNICORN_CONFIG_FILE}@" $bin_file
 
 systemd_start_cmd="systemctl start unicorn-${APP_NAME}"
 echo "append to /etc/rc.local"
-if grep -q "unicorn-${APP_NAME}" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$systemd_start_cmd"'\n' /etc/rc.local; fi;
+if grep -q "start unicorn-${APP_NAME}" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$systemd_start_cmd"'\n' /etc/rc.local; fi;
 echo "Enabling systemd service..."
 systemctl daemon-reload
 systemctl start unicorn-$APP_NAME
