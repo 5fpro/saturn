@@ -1,6 +1,3 @@
-# Put this file at /etc/init.d and chmod +x
-# also you can add /etc/init.d/unicorn-musico.staging.sh to /etc/rc.local
-
 #!/bin/sh
 set -e
 
