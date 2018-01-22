@@ -6,12 +6,11 @@ Description=Unicorn for {{APP_NAME}} app
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 PIDFile={{PID_FILE_PATH}}
 ExecStart={{START_CMD}}
-ExecStop={{STOP_CMD}}
-ExecReload={{RESTART_CMD}}
-Restart=always
+ExecReload=/bin/kill -s USR2 $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
 
 [Install]
 WantedBy=multi-user.target
