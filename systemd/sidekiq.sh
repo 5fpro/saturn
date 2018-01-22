@@ -57,12 +57,9 @@ read SIDEKIQ_LOG_FILE
 if [ "$SIDEKIQ_LOG_FILE" == "" ]; then SIDEKIQ_LOG_FILE="${APP_ROOT}/current/log/sidekiq.log"; fi;
 sed -i "s@{{SIDEKIQ_LOG_FILE}}@${SIDEKIQ_LOG_FILE}@" $bin_file
 
-# echo "generating bin file in ${bin_file}"
-# start_cmd="systemctl start sidekiq-${APP_NAME}.service"
-# echo "append '${bin_file} start' to /etc/rc.local"
-# if grep -q "${bin_file} start" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$bin_file"' start\n' /etc/rc.local; fi;
-# echo "restarting monit..."
-# systemctl restart monit
+systemd_start_cmd="systemctl start sidekiq-${APP_NAME}"
+echo "append to /etc/rc.local"
+if grep -q "sidekiq-${APP_NAME}" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$systemd_start_cmd"'\n' /etc/rc.local; fi;
 echo "Enabling systemd service..."
 systemctl daemon-reload
-# systemctl start sidekiq-$APP_NAME.service
+systemctl start sidekiq-$APP_NAME
