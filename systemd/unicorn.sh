@@ -36,7 +36,7 @@ read DEPLOY_GROUP
 if [ "$DEPLOY_GROUP" == "" ]; then DEPLOY_GROUP="apps"; fi;
 sed -i "s@{{DEPLOY_GROUP}}@${DEPLOY_GROUP}@" $bin_file
 
-echo "unicorn pid dir path? (${APP_ROOT}/tmp/pids)"
+echo "unicorn pid dir path? (${APP_ROOT}/current/tmp/pids)"
 read UNICORN_PID_PATH
 if [ "$UNICORN_PID_PATH" == "" ]; then UNICORN_PID_PATH="${APP_ROOT}/current/tmp/pids"; fi;
 sed -i "s@{{UNICORN_PID_PATH}}@${UNICORN_PID_PATH}@" $bin_file
@@ -47,7 +47,7 @@ if [ "$UNICORN_PID" == "" ]; then UNICORN_PID="${UNICORN_PID_PATH}/unicorn.pid";
 sed -i "s@{{UNICORN_PID}}@${UNICORN_PID}@" $bin_file
 sed -i "s@{{PID_FILE_PATH}}@${UNICORN_PID}@" $systemd_service
 
-echo "unicorn config file path? (${APP_ROOT}/config/unicorn/${RAILS_ENV}.rb)"
+echo "unicorn config file path? (${APP_ROOT}/current/config/unicorn/${RAILS_ENV}.rb)"
 read UNICORN_CONFIG_FILE
 if [ "$UNICORN_CONFIG_FILE" == "" ]; then UNICORN_CONFIG_FILE="${APP_ROOT}/current/config/unicorn/${RAILS_ENV}.rb"; fi;
 sed -i "s@{{UNICORN_CONFIG_FILE}}@${UNICORN_CONFIG_FILE}@" $bin_file
