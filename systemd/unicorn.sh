@@ -6,7 +6,9 @@ curl -o $bin_file -sSL http://saturn.5fpro.com/systemd/unicorn/bin.sh
 chmod +x $bin_file
 
 systemd_service="/etc/systemd/system/unicorn-${APP_NAME}.service"
-curl -o $systemd_service -sSL http://saturn.5fpro.com/monit/puma/systemd.service
+rm $systemd_service
+systemctl daemon-reload
+curl -o $systemd_service -sSL http://saturn.5fpro.com/systemd/unicorn/systemd.service
 chmod 644 $systemd_service
 sed -i "s@{{APP_NAME}}@${APP_NAME}@" $systemd_service
 
