@@ -36,39 +36,48 @@ USER_HOME="/home/${DEPLOY_USER}"
 RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
 BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
 
+me=$(whoami)
+
 # full command
-CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; ${BUNDLE_PREFIX} bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
-# echo "DEBUG:"
-# echo $CMD
+START_CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; ${BUNDLE_PREFIX} bundle exec unicorn -c ${UNICORN_CONFIG_FILE} -E deployment -D )"
+pid_number=`(test -f $UNICORN_PID && cat $UNICORN_PID) || (ps -ef | grep "master -c $UNICORN_CONFIG_FILE" | grep -v grep | awk '{print $2}')`
+STOP_CMD="kill -0 $pid_number"
+RESTART_CMD="kill -s USR2 $pid_number"
+
+if [ $me = "root" ]; then
+  START_CMD="sudo -H -u $DEPLOY_USER bash -c \"$START_CMD\""
+  STOP_CMD="sudo -H -u $DEPLOY_USER bash -c \"$STOP_CMD\""
+  RESTART_CMD="sudo -H -u $DEPLOY_USER bash -c \"$RESTART_CMD\""
+fi;
 
 action="$1"
 set -u
 
+# 檢查PID, 並且砍掉該服務
 sig () {
- test -s "$UNICORN_PID" && kill -$1 `cat $UNICORN_PID`
+  kill -$1 $pid_number
 }
 
-create_pid_path () {
- test -d $UNICORN_PID_PATH || (mkdir -p $UNICORN_PID_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $UNICORN_PID_PATH)
+# 檢查路徑, 如果不存在就自行開路徑
+create_if_not_exists () {
+  test -d $UNICORN_PID_PATH || (mkdir -p $UNICORN_PID_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $UNICORN_PID_PATH)
 }
 
-RESTART_CMD="kill -s USR2 `cat $UNICORN_PID`"
 
 case $action in
 start)
- create_pid_path
- sig 0 && echo >&2 "Already running" && exit 0
- sudo -H -u $DEPLOY_USER bash -c "$CMD"
+  create_if_not_exists
+  sig 0 && echo >&2 "Already running" && exit 0
+  bash -c "$START_CMD"
 ;;
 stop)
- sig QUIT && exit 0
- echo >&2 "Not running"
+  bash -c "$STOP_CMD"
 ;;
 restart)
   bash -c "$RESTART_CMD"
 ;;
 *)
- echo >&2 "Usage: $0 <start|stop|restart>"
- exit 1
+  echo >&2 "Usage: $0 <start|stop|restart>"
+  exit 1
 ;;
 esac

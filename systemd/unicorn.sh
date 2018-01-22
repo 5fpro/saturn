@@ -1,7 +1,7 @@
 echo "rails dir or app name?"
 read APP_NAME
 
-bin_file="/usr/sbin/unicorn-${APP_NAME}"
+bin_file="/usr/bin/unicorn-${APP_NAME}"
 curl -o $bin_file -sSL http://saturn.5fpro.com/systemd/unicorn/bin.sh
 chmod +x $bin_file
 
