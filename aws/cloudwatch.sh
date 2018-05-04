@@ -2,9 +2,9 @@ cd /root
 apt-get update
 apt-get install unzip -y
 apt-get install libwww-perl libdatetime-perl -y
-curl http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip -O
-unzip CloudWatchMonitoringScripts-1.2.1.zip
-rm CloudWatchMonitoringScripts-1.2.1.zip
+curl https://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.2.zip -O
+unzip CloudWatchMonitoringScripts-1.2.2.zip
+rm CloudWatchMonitoringScripts-1.2.2.zip
 cd aws-scripts-mon
 
 echo "Please make sure your IAM role has following permissions:cloudwatch:PutMetricData
@@ -54,7 +54,7 @@ CONFIG_FILE="/root/aws-scripts-mon/awscreds.template"
 sed -i "s@AWSAccessKeyId=@AWSAccessKeyId=${AWS_ACCESS_KEY}@" $CONFIG_FILE
 sed -i "s@AWSSecretKey=@AWSSecretKey=${AWS_SECRET_KEY}@" $CONFIG_FILE
 
-echo "*/5 * * * * root ~/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" > /etc/cron.d/aws-scripts-mon
+echo "*/1 * * * * root /root/aws-scripts-mon/mon-put-instance-data.pl --mem-util --disk-space-util --disk-path=/ --from-cron" > /etc/cron.d/aws-scripts-mon
 chmod 0600 /etc/cron.d/aws-scripts-mon
 service cron restart
 
