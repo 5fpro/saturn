@@ -63,7 +63,7 @@ if [ -f "$dhparam_file" ]; then
   echo "$dhparam_file already exists"
 else
   mkdir -p /etc/nginx/cert/
-  openssl dhparam 2048 -out /etc/nginx/cert/dhparam.pem
+  openssl dhparam -out /etc/nginx/cert/dhparam.pem 2048
 fi;
 
 if grep -q "listen 443" $nginx_conf; then

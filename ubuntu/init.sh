@@ -40,7 +40,7 @@ if [ -f "$dhparam_file" ]; then
   echo ""
 else
   mkdir -p /etc/nginx/cert/
-  openssl dhparam 2048 -out $dhparam_file
+  openssl dhparam -out $dhparam_file 2048
 fi;
 
 echo "Colorful command line..."
