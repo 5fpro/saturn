@@ -65,7 +65,10 @@ if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
 
 if [[ $imagemagick == 'y' ]]; then apt-get install -y imagemagick; fi;
 
-if [[ $pick_timezone == 'y' ]]; then dpkg-reconfigure tzdata; fi;
+if [[ $pick_timezone == 'y' ]]; then
+  apt-get install tzdata
+  dpkg-reconfigure tzdata
+fi;
 
 if [[ $yarn == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/yarn/install.sh)
