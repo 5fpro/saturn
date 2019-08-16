@@ -95,8 +95,7 @@ else
     server_name ${DOMAIN_NAME};
     location /.well-known/acme-challenge/ { alias /var/www/dehydrated/; }
     location / {
-      rewrite ^ https://${DOMAIN_NAME}\$request_uri? permanent;
-      # rewrite ^ https://\$http_host\$request_uri? permanent;
+      rewrite ^ https://\$host\$request_uri? permanent;
     }
   }
   "
