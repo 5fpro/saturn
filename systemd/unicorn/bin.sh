@@ -31,7 +31,7 @@ UNICORN_CONFIG_FILE={{UNICORN_CONFIG_FILE}}
 
 USER_HOME="/home/${DEPLOY_USER}"
 RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
-BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
+BUNDLE_PREFIX="EXECJS_RUNTIME=Node NODE_ENV=production PATH=\$PATH:$USER_HOME/.nvm/versions/node/`cat $USER_HOME/.nvm/alias/default`/bin RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
 
 me=$(whoami)
 

@@ -30,7 +30,7 @@ SIDEKIQ_LOG_FILE={{SIDEKIQ_LOG_FILE}}
 
 USER_HOME="/home/${DEPLOY_USER}"
 RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
-BUNDLE_PREFIX="RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
+BUNDLE_PREFIX="EXECJS_RUNTIME=Node NODE_ENV=production PATH=\$PATH:/home/$DEPLOY_USER/.nvm/versions/node/`cat /home/$DEPLOY_USER/.nvm/alias/default`/bin RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
 CMD_PREFIX="cd $APP_ROOT && $BUNDLE_PREFIX bundle exec"
 
 me=$(whoami)
