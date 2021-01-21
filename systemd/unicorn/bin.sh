@@ -1,4 +1,8 @@
 #!/bin/sh
+### BEGIN INIT INFO
+# Default-Start: 2 3 4 5
+# Default-Stop:
+### END INIT INFO
 set -e
 
 # Include Bundler path

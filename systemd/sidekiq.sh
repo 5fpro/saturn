@@ -1,7 +1,7 @@
 echo "rails app name?"
 read APP_NAME
 
-bin_file="/usr/bin/sidekiq-${APP_NAME}"
+bin_file="/etc/init.d/sidekiq-${APP_NAME}"
 curl -o $bin_file -sSL http://saturn.5fpro.com/systemd/sidekiq/bin.sh
 chmod +x $bin_file
 
@@ -58,9 +58,7 @@ read SIDEKIQ_LOG_FILE
 if [ "$SIDEKIQ_LOG_FILE" == "" ]; then SIDEKIQ_LOG_FILE="${APP_ROOT}/current/log/sidekiq.log"; fi;
 sed -i "s@{{SIDEKIQ_LOG_FILE}}@${SIDEKIQ_LOG_FILE}@" $bin_file
 
-systemd_start_cmd="systemctl start sidekiq-${APP_NAME}"
-echo "append to /etc/rc.local"
-if grep -q "start sidekiq-${APP_NAME}" "/etc/rc.local"; then echo "already appened"; else sed -i -e '$i '"$systemd_start_cmd"'\n' /etc/rc.local; fi;
 echo "Enabling systemd service..."
 systemctl daemon-reload
+systemctl enable sidekiq-$APP_NAME
 systemctl start sidekiq-$APP_NAME
