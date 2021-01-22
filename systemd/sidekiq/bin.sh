@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:
+# Provides: 5FPRO
 # Required-Start:
 # Required-Stop:
 # Default-Start: 2 3 4 5
