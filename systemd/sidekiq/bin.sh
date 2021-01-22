@@ -1,5 +1,8 @@
 #!/bin/sh
 ### BEGIN INIT INFO
+# Provides:
+# Required-Start:
+# Required-Stop:
 # Default-Start: 2 3 4 5
 # Default-Stop:
 ### END INIT INFO
