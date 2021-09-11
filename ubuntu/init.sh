@@ -13,12 +13,10 @@ echo "Pick timezone? [y/N]"
 read pick_timezone
 echo "Setup aws cloudwatch monitoring? [y/N]"
 read awsmo
-echo "Install yarn? [y/N]"
-read yarn
 
 apt-get update
 apt-get upgrade -y
-apt-get install build-essential curl git-core -y
+apt-get install build-essential curl git-core zip unzip -y
 
 echo "Daily ntpdate in /etc/cron.daily/ntpdate ..."
 ntpdate ntp.ubuntu.com
@@ -68,10 +66,6 @@ if [[ $imagemagick == 'y' ]]; then apt-get install -y imagemagick; fi;
 if [[ $pick_timezone == 'y' ]]; then
   apt-get install tzdata
   dpkg-reconfigure tzdata
-fi;
-
-if [[ $yarn == 'y' ]]; then
-  bash <(curl -s http://saturn.5fpro.com/yarn/install.sh)
 fi;
 
 if [[ $awsmo == 'y' ]]; then

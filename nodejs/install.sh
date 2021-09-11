@@ -3,14 +3,14 @@ read SU_USER
 if [ "$SU_USER" == "" ]; then SU_USER="apps"; fi;
 
 echo "To see current nvm version: https://github.com/creationix/nvm#install-script"
-echo "nvm version? (0.33.0)"
+echo "nvm version? (0.38.0)"
 read NVM_VER
-if [ "$NVM_VER" == "" ]; then NVM_VER="0.33.0"; fi;
+if [ "$NVM_VER" == "" ]; then NVM_VER="0.38.0"; fi;
 
 echo "To see current node.js version: https://nodejs.org/"
-echo "nodejs version? (v6.9.5)"
+echo "nodejs version? (v14.17.6)"
 read NODE_VER
-if [ "$NODE_VER" == "" ]; then NODE_VER="v6.9.5"; fi;
+if [ "$NODE_VER" == "" ]; then NODE_VER="v14.17.6"; fi;
 
 apt-get update
 apt-get upgrade -y
@@ -28,4 +28,7 @@ nodebin=`sudo -i -u $SU_USER bash -c "${nvmsh} && which node"`
 ln -s $nodebin /usr/bin/node
 
 CMD="echo \"EXECJS_RUNTIME=Node\" >> /home/${SU_USER}/.bashrc"
+sudo -i -u $SU_USER bash -c "$CMD"
+
+CMS="npm install --global yarn;npm install --global cloudconvert-cli"
 sudo -i -u $SU_USER bash -c "$CMD"
