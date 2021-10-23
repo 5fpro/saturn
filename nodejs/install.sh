@@ -3,14 +3,14 @@ read SU_USER
 if [ "$SU_USER" == "" ]; then SU_USER="apps"; fi;
 
 echo "To see current nvm version: https://github.com/creationix/nvm#install-script"
-echo "nvm version? (0.38.0)"
+echo "nvm version? (0.39.0)"
 read NVM_VER
-if [ "$NVM_VER" == "" ]; then NVM_VER="0.38.0"; fi;
+if [ "$NVM_VER" == "" ]; then NVM_VER="0.39.0"; fi;
 
 echo "To see current node.js version: https://nodejs.org/"
-echo "nodejs version? (v14.17.6)"
+echo "nodejs version? (v14.18.1)"
 read NODE_VER
-if [ "$NODE_VER" == "" ]; then NODE_VER="v14.17.6"; fi;
+if [ "$NODE_VER" == "" ]; then NODE_VER="v14.18.1"; fi;
 
 apt-get update
 apt-get upgrade -y
