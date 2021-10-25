@@ -30,5 +30,5 @@ ln -s $nodebin /usr/bin/node
 CMD="echo \"EXECJS_RUNTIME=Node\" >> /home/${SU_USER}/.bashrc"
 sudo -i -u $SU_USER bash -c "$CMD"
 
-CMS="npm install --global yarn;npm install --global cloudconvert-cli"
+CMD="${nvmsh} && npm install --global yarn;${nvmsh} && npm install --global cloudconvert-cli"
 sudo -i -u $SU_USER bash -c "$CMD"

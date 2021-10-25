@@ -16,7 +16,7 @@ read awsmo
 
 apt-get update
 apt-get upgrade -y
-apt-get install build-essential curl git-core zip unzip -y
+apt-get install build-essential curl git-core zip unzip net-tools fonts-arphic-bkai00mp -y
 
 echo "Daily ntpdate in /etc/cron.daily/ntpdate ..."
 ntpdate ntp.ubuntu.com
