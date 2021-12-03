@@ -57,7 +57,7 @@ if [[ $nginx == 'y' ]]; then
   bash <(curl -s http://saturn.5fpro.com/monit/nginx.sh)
 fi;
 
-if [[ $pg == 'y' ]]; then apt-get install -y libpq-dev; fi;
+if [[ $pg == 'y' ]]; then apt-get install -y libpq-dev postgresql-client-12; fi;
 
 if [[ $mysql == 'y' ]]; then apt-get install -y libmysqlclient-dev; fi;
 
