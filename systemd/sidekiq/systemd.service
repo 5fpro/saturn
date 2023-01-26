@@ -2,16 +2,22 @@
 ### END INIT INFO
 
 [Unit]
-Description=Sidekiq for {{APP_NAME}} app
+Description=Sidekiq for {{APP_NAME}} ({{RAILS_ENV}})
 After=network.target
 
 [Service]
-Type=forking
-PIDFile={{SIDEKIQ_PID}}
-ExecStart={{START_CMD}}
-ExecStop={{STOP_CMD}}
-ExecReload={{RESTART_CMD}}
-Restart=always
+Type=notify
+WorkingDirectory={{APP_ROOT}}/current
+ExecStart=/home/{{DEPLOY_USER}}/.rbenv/bin/rbenv exec bundle exec sidekiq -e {{RAILS_ENV}} -C {{SIDEKIQ_CONFIG_FILE}} -r {{APP_ROOT}}/current
+EnvironmentFile={{APP_ROOT}}/current/.env
+Environment=RBENV_ROOT=/home/{{DEPLOY_USER}}/.rbenv RUBY_VERSION=`cat {{APP_ROOT}}/current/.ruby-version`
+RestartSec=1
+Restart=on-failure
+StandardOutput={{SIDEKIQ_LOG_FILE}}
+StandardError={{SIDEKIQ_LOG_FILE}}
+SyslogIdentifier=sidekiq-{{APP_NAME}}
+User={{DEPLOY_USER}}
+UMask=0002
 
 [Install]
 WantedBy=multi-user.target
