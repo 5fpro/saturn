@@ -36,7 +36,7 @@ read SIDEKIQ_LOG_FILE
 if [ "$SIDEKIQ_LOG_FILE" == "" ]; then SIDEKIQ_LOG_FILE="${APP_ROOT}/current/log/sidekiq.log"; fi;
 sed -i "s@{{SIDEKIQ_LOG_FILE}}@${SIDEKIQ_LOG_FILE}@" $systemd_service
 
-exec_start="bash -c \"RBENV_ROOT=/home/${DEPLOY_USER}/.rbenv EXECJS_RUNTIME=Node NODE_ENV=production RUBY_VERSION=\`cat ${APP_ROOT}/current/.ruby-version\` PATH=\$PATH:/home/${DEPLOY_USER}/.nvm/versions/node/\`cat /home/${DEPLOY_USER}/.nvm/alias/default\`/bin /home/${DEPLOY_USER}/.rbenv/bin/rbenv exec bundle exec sidekiq -e ${RAILS_ENV} -C ${SIDEKIQ_CONFIG_FILE} -r ${APP_ROOT}/current\""
+exec_start="/bin/bash -c \"RBENV_ROOT=/home/${DEPLOY_USER}/.rbenv EXECJS_RUNTIME=Node NODE_ENV=production RUBY_VERSION=\`cat ${APP_ROOT}/current/.ruby-version\` PATH=\$PATH:/home/${DEPLOY_USER}/.nvm/versions/node/\`cat /home/${DEPLOY_USER}/.nvm/alias/default\`/bin /home/${DEPLOY_USER}/.rbenv/bin/rbenv exec bundle exec sidekiq -e ${RAILS_ENV} -C ${SIDEKIQ_CONFIG_FILE} -r ${APP_ROOT}/current\""
 sed -i "s@{{exec_start}}@${exec_start}@" $systemd_service
 
 echo "Enabling systemd service..."
