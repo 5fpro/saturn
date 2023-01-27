@@ -8,9 +8,8 @@ After=network.target
 [Service]
 Type=notify
 WorkingDirectory={{APP_ROOT}}/current
-ExecStart=/home/{{DEPLOY_USER}}/.rbenv/bin/rbenv exec bundle exec sidekiq -e {{RAILS_ENV}} -C {{SIDEKIQ_CONFIG_FILE}} -r {{APP_ROOT}}/current
+ExecStart=bash -c "RBENV_ROOT=/home/{{DEPLOY_USER}}/.rbenv EXECJS_RUNTIME=Node NODE_ENV=production RUBY_VERSION=`cat {{APP_ROOT}}/current/.ruby-version` PATH=$PATH:/home/{{DEPLOY_USER}}/.nvm/versions/node/`cat /home/{{DEPLOY_USER}}/.nvm/alias/default`/bin /home/{{DEPLOY_USER}}/.rbenv/bin/rbenv exec bundle exec sidekiq -e {{RAILS_ENV}} -C {{SIDEKIQ_CONFIG_FILE}} -r {{APP_ROOT}}/current"
 EnvironmentFile={{APP_ROOT}}/current/.env
-Environment=RBENV_ROOT=/home/{{DEPLOY_USER}}/.rbenv RUBY_VERSION=`cat {{APP_ROOT}}/current/.ruby-version`
 RestartSec=1
 Restart=on-failure
 StandardOutput={{SIDEKIQ_LOG_FILE}}
