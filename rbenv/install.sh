@@ -21,12 +21,8 @@ apt-get install -y git curl zlib1g-dev build-essential libssl-dev libreadline-de
 user_home="/home/${WHO}"
 shell="\
 cd ${user_home}
-git clone git://github.com/sstephenson/rbenv.git .rbenv
-echo 'export PATH=\"\$HOME/.rbenv/bin:\$PATH\"' >> ${user_home}/${bash_file}
-echo 'eval \"\$(rbenv init -)\"' >> ${user_home}/${bash_file}
-git clone git://github.com/sstephenson/ruby-build.git ${user_home}/.rbenv/plugins/ruby-build
-echo 'export PATH=\"\$HOME/.rbenv/plugins/ruby-build/bin:\$PATH\"' >> ${user_home}/${bash_file}
-. ~/${bash_file}
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+source ${user_home}/${bash_file}
 ${user_home}/.rbenv/bin/rbenv install -v ${RUBY_VERSION}
 ${user_home}/.rbenv/bin/rbenv global ${RUBY_VERSION}
 echo \"gem: --no-document\" > ${user_home}/.gemrc
