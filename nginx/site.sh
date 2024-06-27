@@ -34,7 +34,7 @@ read UNICORN_SOCK
 if [ "$UNICORN_SOCK" == "" ]; then UNICORN_SOCK="${DEFAULT_UNICORN_SOCK}"; fi;
 sed -i "s@{{UNICORN_SOCK}}@${UNICORN_SOCK}@" $conf_file
 
-DEFAULT_ASSETS_FOLDERS="assets|uploads"
+DEFAULT_ASSETS_FOLDERS="assets|uploads|partytown"
 echo "Assets folders under ${APP_ROOT}/current/public? (${DEFAULT_ASSETS_FOLDERS})"
 read ASSETS_FOLDERS
 if [ "$ASSETS_FOLDERS" == "" ]; then ASSETS_FOLDERS="${DEFAULT_ASSETS_FOLDERS}"; fi;
