@@ -46,7 +46,7 @@ me=$(whoami)
 # full command
 PUMA_STATE_FILE="${APP_ROOT}/shared/tmp/pids/puma.state"
 CMD_PREFIX="cd ${APP_ROOT_CURRENT} && RAILS_ENV=\"${RAILS_ENV}\" ${BUNDLE_PREFIX} bundle exec "
-START_CMD="${CMD_PREFIX} puma -e ${RAILS_ENV} -C \"${PUMA_CONFIG_FILE}\""
+START_CMD="${CMD_PREFIX} puma -e ${RAILS_ENV} -C \"${PUMA_CONFIG_FILE}\" --pidfile \"${PUMA_PID}\""
 STOP_CMD="${CMD_PREFIX} pumactl -S \"${PUMA_STATE_FILE}\" stop"
 RESTART_CMD="${CMD_PREFIX} pumactl -S \"${PUMA_STATE_FILE}\" phased-restart"
 

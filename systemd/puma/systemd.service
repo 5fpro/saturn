@@ -10,9 +10,11 @@ Type=simple
 WorkingDirectory={{APP_ROOT}}
 PIDFile={{PID_FILE_PATH}}
 ExecStart={{START_CMD}}
-ExecReload=/bin/kill USR1 $MAINPID
-ExecStop=/bin/kill -s QUIT $MAINPID
+ExecReload={{RESTART_CMD}}
+ExecStop={{STOP_CMD}}
 Restart=always
+User=apps
+Group=apps
 
 [Install]
 WantedBy=multi-user.target
