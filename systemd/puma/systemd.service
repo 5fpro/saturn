@@ -8,10 +8,11 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory={{APP_ROOT}}
-PIDFile={{PID_FILE_PATH}}
-ExecStart={{START_CMD}}
-ExecReload={{RESTART_CMD}}
-ExecStop={{STOP_CMD}}
+PIDFile={{APP_ROOT}}/shared/tmp/pids/puma.pid
+ExecStart=/etc/init.d/puma-bznk start
+ExecReload=/bin/kill -s SIGUSR1 $MAINPID
+ExecRestart=/bin/kill -s SIGUSR2 $MAINPID
+ExecStop=/etc/init.d/puma-bznk stop
 Restart=always
 User=apps
 Group=apps
