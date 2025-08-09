@@ -68,18 +68,31 @@ create_if_not_exists () {
   test -d $PUMA_PID_PATH || (mkdir -p $PUMA_PID_PATH && chown $DEPLOY_USER.$DEPLOY_GROUP $PUMA_PID_PATH)
 }
 
+puma_running() {
+  [[ -f "$STATE_FILE" && -f "$PUMA_PID" ]] && kill -0 "$(cat "$PUMA_PID")" 2>/dev/null
+}
 
 case $action in
 start)
   create_if_not_exists
-  # sig 0 && echo >&2 "Already running" && exit 0
   bash -c "$START_CMD"
 ;;
 stop)
-  bash -c "$STOP_CMD"
+  if puma_running; then
+    bash -c "$STOP_CMD"
+  else
+    echo "Puma is not running"
+  fi
 ;;
 restart)
-  bash -c "$RESTART_CMD"
+  if puma_running; then
+    echo "[INFO] Puma running; doing phased restart..."
+    bash -c "$RESTART_CMD"
+  else
+    echo "[WARN] Puma not running; starting it..."
+    create_if_not_exists
+    bash -c "$START_CMD"
+  fi
 ;;
 *)
   echo >&2 "Usage: $0 <start|stop|restart>"
