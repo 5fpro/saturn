@@ -16,7 +16,7 @@ PATH=$PATH:/usr/local/bin
 TIMEOUT=60
 
 # 你的 rails app dir
-APP_ROOT={{APP_ROOT}}/current
+APP_ROOT_CURRENT={{APP_ROOT}}/current
 
 # rails env
 RAILS_ENV={{RAILS_ENV}}
@@ -37,16 +37,17 @@ PUMA_PID={{PUMA_PID}}
 PUMA_CONFIG_FILE={{PUMA_CONFIG_FILE}}
 
 USER_HOME="/home/${DEPLOY_USER}"
-RUBY_VERSION=`cat ${APP_ROOT}/.ruby-version`
+RUBY_VERSION=`cat ${APP_ROOT_CURRENT}/.ruby-version`
 BUNDLE_PREFIX="EXECJS_RUNTIME=Node NODE_ENV=production PATH=\$PATH:$USER_HOME/.nvm/versions/node/`cat $USER_HOME/.nvm/alias/default`/bin RBENV_ROOT=$USER_HOME/.rbenv RBENV_VERSION=$RUBY_VERSION $USER_HOME/.rbenv/bin/rbenv exec"
 
 me=$(whoami)
 
 # full command
-START_CMD="cd ${APP_ROOT} && ( export RAILS_ENV=\"${RAILS_ENV}\" ; ${BUNDLE_PREFIX} bundle exec puma -e ${RAILS_ENV} -C ${PUMA_CONFIG_FILE}  )"
-pid_number=`(test -f $PUMA_PID && cat $PUMA_PID) || (ps -ef | grep "puma" | grep -v grep | awk '{print $2}')`
-STOP_CMD="kill -s QUIT $pid_number"
-RESTART_CMD="kill -s USR2 $pid_number"
+STATE_FILE="${APP_ROOT}/shared/tmp/pids/puma.state"
+CMD_PREFIX="cd ${APP_ROOT_CURRENT} && RAILS_ENV=\"${RAILS_ENV}\" ${BUNDLE_PREFIX} bundle exec "
+START_CMD="${CMD_PREFIX} puma -e ${RAILS_ENV} -C \"${PUMA_CONFIG_FILE}\""
+STOP_CMD="${CMD_PREFIX} pumactl -S \"${STATE_FILE}\" stop"
+RESTART_CMD="${CMD_PREFIX} pumactl -S \"${STATE_FILE}\" phased-restart"
 
 if [ $me = "root" ]; then
   START_CMD="sudo -H -u $DEPLOY_USER bash -c \"$START_CMD\""

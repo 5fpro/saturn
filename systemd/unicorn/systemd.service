@@ -12,6 +12,9 @@ ExecStart={{START_CMD}}
 ExecReload=/bin/kill -s USR2 $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 Restart=always
+SyslogIdentifier=puma-bznk
+User=apps
+UMask=0002
 
 [Install]
 WantedBy=multi-user.target
