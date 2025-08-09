@@ -16,6 +16,7 @@ PATH=$PATH:/usr/local/bin
 TIMEOUT=60
 
 # 你的 rails app dir
+APP_ROOT={{APP_ROOT}}
 APP_ROOT_CURRENT={{APP_ROOT}}/current
 
 # rails env
@@ -43,11 +44,11 @@ BUNDLE_PREFIX="EXECJS_RUNTIME=Node NODE_ENV=production PATH=\$PATH:$USER_HOME/.n
 me=$(whoami)
 
 # full command
-STATE_FILE="${APP_ROOT}/shared/tmp/pids/puma.state"
+PUMA_STATE_FILE="${APP_ROOT}/shared/tmp/pids/puma.state"
 CMD_PREFIX="cd ${APP_ROOT_CURRENT} && RAILS_ENV=\"${RAILS_ENV}\" ${BUNDLE_PREFIX} bundle exec "
 START_CMD="${CMD_PREFIX} puma -e ${RAILS_ENV} -C \"${PUMA_CONFIG_FILE}\""
-STOP_CMD="${CMD_PREFIX} pumactl -S \"${STATE_FILE}\" stop"
-RESTART_CMD="${CMD_PREFIX} pumactl -S \"${STATE_FILE}\" phased-restart"
+STOP_CMD="${CMD_PREFIX} pumactl -S \"${PUMA_STATE_FILE}\" stop"
+RESTART_CMD="${CMD_PREFIX} pumactl -S \"${PUMA_STATE_FILE}\" phased-restart"
 
 if [ $me = "root" ]; then
   START_CMD="sudo -H -u $DEPLOY_USER bash -c \"$START_CMD\""
@@ -69,7 +70,7 @@ create_if_not_exists () {
 }
 
 puma_running() {
-  [[ -f "$STATE_FILE" && -f "$PUMA_PID" ]] && kill -0 "$(cat "$PUMA_PID")" 2>/dev/null
+  [[ -f "$PUMA_STATE_FILE" && -f "$PUMA_PID" ]] && kill -0 "$(cat "$PUMA_PID")" 2>/dev/null
 }
 
 case $action in
